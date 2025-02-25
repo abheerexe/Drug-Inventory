@@ -80,16 +80,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
   <title>Login</title>
+  <link rel="stylesheet" href="login_style.css">
+  <style>*{
+    /* background: #000; */
+}
+
+#searchForm button {
+    padding: 8px 20px;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(188,70,252,1) 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    right: 2px;
+}
+.search-container {
+    position: relative;
+    display: block;
+    justify-content: left;
+    align-items: center;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    gap: 5px; /* Add 5px gap between flex items */
+}</style>
 </head>
 <body>
-  <h2>Login</h2>
+  <!-- <h2>Login</h2> -->
   <?php 
         if(!empty($login_err)){
             echo '<div class="alert alert-danger">' . $login_err . '</div>';
         }        
     ?>
 
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm" class="search-container">
+    <label style="display: flex; font-size: xx-large; justify-content: center;">Login</label>
+    <br>
     <label for="username">Username:</label>
     <input type="text" name="username" id="username" required><br><br>
 
@@ -99,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <input type="submit" value="Login">
-  </form>
     <p>Don't have an account? <a href="signup.php">Sign up now</a>.</p>
+  </form>
 </body>
 </html>

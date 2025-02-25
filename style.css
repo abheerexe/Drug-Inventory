@@ -1,7 +1,12 @@
+*{
+    background: black;
+}
 #authButtons button {
     padding: 10px 20px;
     margin: 0 5px; /* Spacing between buttons */
-    background-color: #4CAF50; /* Green */
+    /* background-color: #4CAF50; Green */
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 25%, rgba(113,248,251,1) 100%);
     color: white;
     border: none;
     cursor: pointer;
@@ -12,19 +17,28 @@
     font-family: "Funnel Sans", serif;
     font-optical-sizing: auto;
     font-weight: 500;
-    font-style: normal;
+    font-style: normal
   }
+.heading{
+    color: white;
+}
 
 #searchResults table {
-    width: 100%;
-    border-collapse: collapse; /* Collapse borders for a cleaner look */
-    margin-top: 20px;       /* Add some spacing above the table */
+    width: 80%;
+    border-spacing: 15px; /* Use border-spacing instead of border-collapse */
+    margin-top: 20px;
+    border-radius: 10px;  /* border-radius works now */
+                          /* Apply the border here, if you still want the outer border  */
 }
 
 #searchResults th, #searchResults td {
-    border: 1px solid #ddd; /* Light gray border */
-    padding: 10px;         /* Add padding around cell content */
-    text-align: left;       /* Left-align text */
+    border: 1px solid #ddd; 
+    padding: 10px;
+    /* row-gap: 10px; */
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+
 }
 
 #searchResults th {
@@ -36,14 +50,61 @@
     background-color: #f9f9f9; /* Alternate row colors (zebra stripes) */
 }
 
-/* Style the search input and button */
+/* Style the search input and button*/ 
 #searchInput {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px; /* Rounded corners */
+ /*Rounded corners*/ 
 }
 
+
 #searchForm button {
+    padding: 8px 20px;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 25%, rgba(113,248,251,1) 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    right: 2px;
+}
+
+/* Style for no results message */
+#searchResults p {  
+    margin-top: 10px;
+    color: white;
+}
+
+#searchResults td {
+    /* ... other td styles ... */
+    color: white; /* Set background to white */
+}
+
+#searchResults tr:hover {
+background-color: #e0e0e0;  /* Slightly darker gray on hover */
+cursor: pointer;  
+zoom: 115%;         /* Change cursor to a pointer on hover */
+}
+
+/* Other styles... */
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    gap: 5px; /* Add 5px gap between flex items */
+}
+.search-container input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+}
+
+.search-container button {
     padding: 8px 12px;
     background-color: #4CAF50; /* Green */
     color: white;
@@ -52,11 +113,3 @@
     cursor: pointer;
 }
 
-/* Style for no results message */
-#searchResults p {  
-    margin-top: 10px;
-}
-#searchResults tr:hover {
-background-color: #e0e0e0;  /* Slightly darker gray on hover */
-cursor: pointer;           /* Change cursor to a pointer on hover */
-}

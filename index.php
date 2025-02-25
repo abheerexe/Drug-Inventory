@@ -8,21 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 <body>
+    
 
-    <h1 class="funnel-sans-font">Drug Inventory Search</h1>
+    <h1 class="funnel-sans-font heading">Drug Inventory Search</h1>
     <div id="authButtons">
       <button onclick="window.location.href='login.php'">Login</button>
       <button onclick="window.location.href='signup.php'">Sign Up</button>
 
     </div>
-    <form id="searchForm" method="get" action="">
-        <input type="text" id="searchInput" name="q" placeholder="Search for drugs...">
-        <button type="submit">Search</button>
-    </form>
-
-    <div id="searchResults">
-        </div>  </div>
-
+    <br>
+    <form id="searchForm" method="get" action="" class="search-container">
+    <input type="text" id="searchInput" name="q" placeholder="Search for drugs...">
+    <button type="submit">Search</button>
+</form>
+    
+    <div id="searchResults" class="funnel-sans-font">
+        </div>  
+    
 
     <script>
         // JavaScript for handling search (AJAX)
