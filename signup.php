@@ -97,7 +97,8 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="signup_style.css"> 
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <style>
         body{ font: 14px sans-serif; }
         .wrapper{ width: 360px; padding: 20px; }
@@ -105,35 +106,51 @@ $conn->close();
 </head>
 <body>
     <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Username</label>
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm" class="search-container">
+        <label style="color: white; font-size: xx-large;">Sign Up</label>
+        <br>
+        <br>
+        <label style="color: white; font-size: medium;">Please fill this form to create an account.</label>
+        <br>
+        <br>
+        <div class="form-group">
+                <label style="color: white;">Username</label>
                 <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                <br>
+                <br>
             </div>    
             <div class="form-group">
-                <label>Password</label>
+                <label style="color: white;">Password</label>
                 <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                <br>
+                <br>
             </div>
             <div class="form-group">
-                <label>Confirm Password</label>
+                <label style="color: white;">Confirm Password</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+                <br>
+                <br>
             </div>
             <div>
-                <label for="role">Role:</label>
+                <label for="role" style="color: white;">Role:</label>
                 <select name="role" id="role" class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>">
-                  <option value="">--Select Role--</option>
+                  <option value="" >--Select Role--</option>
                   <!-- <option value="Admin">Admin</option> -->
                   <option value="Institution Staff">Institution Staff</option>
                 </select>
                 <span class="invalid-feedback"><?php echo $role_err ?></span>
+                <br>
+                <br>
+                <br>
+                <br>
+                
             </div>
             <div id="institutionDiv" style="display: none">
-                <label for="institution">Institution:</label>
+                <label for="institution" style="color: white;">Institution:</label>
                 <select name="institution" id="institution" class="form-control <?php echo (!empty($institution_err)) ? 'is-invalid' : ''; ?>">
                   <option value="">Select an institution</option>
                   <?php
@@ -148,10 +165,10 @@ $conn->close();
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <input type="submit" id="searchForm-button" value="Submit">
+                <input type="reset" id="searchForm-button" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p style="color: white;">Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
     </div>    
     <script>

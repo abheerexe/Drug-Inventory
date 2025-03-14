@@ -1,0 +1,212 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+    font-size: 16px;
+    color: #333; /* Dark gray text color */
+    background-color: #f8f9fa; /* Light gray background */
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+}
+
+.wrapper {
+    width: 1200px;
+    padding: 20px;
+    margin: 20px auto; /* Add margin around wrapper */
+    background-color: #fff; /* White container background */
+    border-radius: 5px; /* Optional: Rounded corners for container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+}
+
+h2, h3 {
+    color: #343a40; /* Slightly darker heading color */
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500; /* Medium font weight for headings */
+}
+
+hr {
+    border-top: 1px solid #ddd; /* Lighter horizontal rule */
+    margin: 20px 0;
+}
+
+/* Navigation Menu Styles */
+nav ul {
+    list-style: none; /* Remove bullets */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Horizontal menu */
+    gap: 20px; /* Spacing between menu items */
+}
+
+nav li {
+    margin-bottom: 0; /* Remove list item bottom margin */
+}
+
+nav a {
+    display: block;
+    padding: 10px 15px;
+    color: #495057; /* Gray link color */
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners for links */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+nav a:hover {
+    background-color: #e9ecef; /* Light gray hover background */
+    color: #007bff; /* Blue hover text color (optional accent) */
+}
+
+nav a.active {
+    background-color: #007bff; /* Blue background for active link */
+    color: white;
+}
+
+.dashboard-content {
+    margin-top: 30px;
+    line-height: 1.6; /* Improved readability for text */
+}
+
+.dashboard-content h3 {
+    font-size: 1.7rem;
+}
+
+.dashboard-content ul {
+    list-style-type: square; /* Square bullets for lists in content */
+    padding-left: 25px;
+}
+
+.btn-danger,
+.btn-primary,
+.btn-secondary {
+    border: none; /* Remove default button borders */
+    padding: 10px 20px; /* Adjust button padding */
+    border-radius: 5px; /* Rounded button corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth button hover */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Bootstrap secondary gray */
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62; /* Darker gray on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Bootstrap danger red */
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination a {
+    color: #495057; /* Gray pagination link color */
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #e9ecef;
+    border-color: #bbb;
+}
+
+.pagination a.nav-btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+.pagination-ellipsis {
+    padding: 8px 16px;
+    margin: 0 4px;
+    color: #777;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd; /* Light border for the whole table */
+    border-radius: 5px 5px 0 0; /* Rounded top corners for table */
+    overflow: hidden; /* To clip rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05); /* Optional: Very subtle shadow */
+}
+
+.table th,
+.table td {
+    border: none; /* Remove individual cell borders */
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2; /* Very light gray header background */
+    color: #555; /* Slightly darker header text */
+    font-weight: 500; /* Medium font weight for header */
+    border-bottom: 1px solid #ddd; /* Bottom border for header row */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Very light gray for even rows */
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none; /* No bottom border for last row cells */
+}
+
+.form-control {
+    border: 1px solid #ced4da; /* Light border for form inputs */
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue shadow on focus */
+    outline: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555; /* Gray label color */
+    font-weight: 500; /* Medium font weight for labels */
+}
+
+.invalid-feedback {
+    color: #dc3545; /* Bootstrap danger red for error messages */
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}

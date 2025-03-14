@@ -1,5 +1,5 @@
 *{
-    background: #000;
+    background-color: black;
 }
 
 #searchForm button {
@@ -14,7 +14,6 @@
 }
 
 #searchForm-button {
-    position: relative;
     padding: 8px 20px;
     background: rgb(63,94,251);
     background: radial-gradient(circle, rgba(63,94,251,1) 25%, rgba(113,248,251,1) 100%);
@@ -22,7 +21,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    right: -90px;
+    right: 2px;
 }
 
 .search-container {
@@ -30,7 +29,7 @@
     display: block;
     justify-content: left;
     align-items: center;
-    width: 100%;
+    width: 75%;
     margin: 20px auto;
     padding: 10px;
     border: 1px solid #ccc;
@@ -45,6 +44,9 @@
     color: white;
     width: fit-content; 
     margin: 0;
+}
+select {
+    color: white; /* Or your desired text color */
 }
 .wrapper{
     display: flex;

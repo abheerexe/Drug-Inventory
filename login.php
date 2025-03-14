@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Redirect to appropriate page based on role (you'll need to create these pages)
                 if ($row["role"] == "Admin") {
-                  header("location: supplier_dashboard.php");  // Or wherever your admin dashboard is
+                  header("location: admin/admin.php");  // Or wherever your admin dashboard is
                 }else if($row['role'] === 'Super Admin'){
                   header("location: super_admin_dashboard.php");
                 } else if ($row['role'] === "Institution Staff"){
@@ -81,32 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <title>Login</title>
   <link rel="stylesheet" href="login_style.css">
-  <style>*{
-    /* background: #000; */
-}
-
-#searchForm button {
-    padding: 8px 20px;
-    background: rgb(63,94,251);
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(188,70,252,1) 100%);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    right: 2px;
-}
-.search-container {
-    position: relative;
-    display: block;
-    justify-content: left;
-    align-items: center;
-    width: 50%;
-    margin: 20px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    gap: 5px; /* Add 5px gap between flex items */
-}</style>
 </head>
 <body>
   <!-- <h2>Login</h2> -->
@@ -115,20 +89,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<div class="alert alert-danger">' . $login_err . '</div>';
         }        
     ?>
-
+<div class="wrapper">
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm" class="search-container">
-    <label style="display: flex; font-size: xx-large; justify-content: center;">Login</label>
+    <label style="display: flex; font-size: xx-large; justify-content: center; color: white;">Login</label>
     <br>
-    <label for="username">Username:</label>
+    <label for="username" style="color: white;">Username:</label>
     <input type="text" name="username" id="username" required><br><br>
 
 
-    <label for="password">Password:</label>
+    <label for="password" style="color: white;">Password:</label>
     <input type="password" name="password" id="password" required><br><br>
 
 
-    <input type="submit" value="Login">
-    <p>Don't have an account? <a href="signup.php">Sign up now</a>.</p>
+    <input type="submit" value="Login" id="searchForm-button">
+    <p style="color:white;">Don't have an account? <a href="signup.php">Sign up now</a>.</p>
   </form>
+  </div>
 </body>
 </html>
