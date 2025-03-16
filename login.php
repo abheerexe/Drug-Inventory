@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Prevent caching of this page (to fix back button issue)
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+header("Pragma: no-cache"); // HTTP 1.0.
+header("Expires: 0"); // Proxies.
+
 require 'database.php';
 // Check if already logged in
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -30,16 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         $result = $stmt->get_result();
 
-
-
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
 
-
             if (password_verify($password, $row['password'])) {  // Verify hashed password
-
                 session_start();
-
 
                 // Store data in session variables
                 $_SESSION["loggedin"] = true;
@@ -49,61 +49,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['supplier_id'] = $row['supplier_id'];
                 $_SESSION['institution_id'] = $row['institution_id'];
 
-                // Redirect to appropriate page based on role (you'll need to create these pages)
+                // Redirect to appropriate page based on role
                 if ($row["role"] == "Admin") {
-                  header("location: admin/admin.php");  // Or wherever your admin dashboard is
-                }else if($row['role'] === 'Super Admin'){
-                  header("location: super_admin_dashboard.php");
-                } else if ($row['role'] === "Institution Staff"){
-                  header("location: institution_dashboard.php");
+                    header("location: admin/admin.php");
+                } else if($row['role'] === 'Super Admin') {
+                    header("location: super_admin_dashboard.php");
+                } else if ($row['role'] === "Institution Staff") {
+                    header("location: institution/dashboard.php");
                 } else {
-                  // Redirect to a generic logged-in page or home page
-                  header("location: index.php"); 
+                    header("location: index.php");
                 }
                 exit;
-
-
-
             } else {
                 $login_err = "Invalid username or password.";
             }
-
         } else {
             $login_err = "Invalid username or password.";
         }
         $stmt->close();
-        $conn->close(); // Close connection after usage
+        $conn->close();
     }
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
-  <link rel="stylesheet" href="login_style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login_style.css">
 </head>
 <body>
-  <!-- <h2>Login</h2> -->
-  <?php 
-        if(!empty($login_err)){
-            echo '<div class="alert alert-danger">' . $login_err . '</div>';
-        }        
-    ?>
-<div class="wrapper">
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="searchForm" class="search-container">
-    <label style="display: flex; font-size: xx-large; justify-content: center; color: white;">Login</label>
-    <br>
-    <label for="username" style="color: white;">Username:</label>
-    <input type="text" name="username" id="username" required><br><br>
+    <div class="wrapper">
+        <div class="login-container">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <h1>Login</h1>
 
+                <?php
+                if(!empty($login_err)){
+                    echo '<div class="alert">' . $login_err . '</div>';
+                }
+                ?>
 
-    <label for="password" style="color: white;">Password:</label>
-    <input type="password" name="password" id="password" required><br><br>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
 
-    <input type="submit" value="Login" id="searchForm-button">
-    <p style="color:white;">Don't have an account? <a href="signup.php">Sign up now</a>.</p>
-  </form>
-  </div>
+                <button type="submit" class="button-40">Login</button>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="signup.php">Sign up now</a>
+                </p>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 19, 2025 at 07:12 AM
+-- Generation Time: Mar 16, 2025 at 08:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -88,7 +88,8 @@ CREATE TABLE `institutions` (
 
 INSERT INTO `institutions` (`id`, `name`, `address`, `contact_person`, `phone`, `email`, `type`, `license_number`, `hospital_type`) VALUES
 (1, 'admin', '-', '0', '0', '1@1.com', 'Institution', '12345', 'medical'),
-(2, 'MGH', 'Jalori Gate', '0', '0', '1@1.com', 'Institution', '12', 'Government');
+(2, 'MGH', 'Jalori Gate', '0', '0', '1@1.com', 'Institution', '12', 'Government'),
+(3, 'mdm', 'mdm', 'raj kumar', '9413844970', 'harshafam99@gmail.com', 'Institution', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -138,8 +139,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `institution_id`, `supplier_id`) VALUES
-(1, 'Admin', 'Admin', 'Admin', 1, 0),
-(2, 'Abheer', '$2y$10$b7crcQ/H4NBvpeGdNxi7j.vRZsuwXquviVbN96GdZK8.puay8pjyy', 'Institution Staff', 2, NULL);
+(2, 'Abheer', '$2y$10$b7crcQ/H4NBvpeGdNxi7j.vRZsuwXquviVbN96GdZK8.puay8pjyy', 'Institution Staff', 2, NULL),
+(3, 'Admin', '$2a$12$gmZ4K1sEaepwpMdRABIfouD5uz5OkwhIpqOy2t9ZfzVHdeyAGAaXu', 'Admin', NULL, 1),
+(4, 'Nikita', '$2y$10$OAG2qYF9xSwMGCCO4xj4se2.kKA7OBGgV2f1Ak/1bDrJI56sgLfMC', 'Institution Staff', 2, NULL);
 
 --
 -- Indexes for dumped tables
@@ -222,7 +224,7 @@ ALTER TABLE `drugs`
 -- AUTO_INCREMENT for table `institutions`
 --
 ALTER TABLE `institutions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `institution_inventory`
@@ -240,7 +242,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

@@ -39,6 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_institution'])) {
         $institution_type_err = "Please select a type.";
     }
 
+    // Validate phone if provided
+    if (!empty($institution_phone)) {
+        if (!preg_match('/^[0-9]{10}$/', $institution_phone)) {
+            $institution_phone_err = "Phone number must be 10 digits only.";
+        }
+    }
+
+
     // Check input errors before inserting in database
     if (empty($institution_name_err) && empty($institution_address_err) && empty($institution_contact_person_err) && empty($institution_phone_err) && empty($institution_email_err) && empty($institution_type_err)) {
         // Prepare an insert statement
@@ -86,7 +94,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
 <html lang="en">
 
 <head>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -117,44 +125,44 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
 
         <h3>Add Institution</h3>
         <!-- Institution Form -->
-        <form name="add_institution" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form name="add_institution" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" onsubmit="return validateForm()">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control <?php echo (!empty($institution_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_name; ?>" required>
-                <span class="invalid-feedback"><?php echo $institution_name_err; ?></span>
+                <input type="text" name="name" id="name" class="form-control <?php echo (!empty($institution_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_name; ?>" required oninput="validateName()">
+                <span class="invalid-feedback" id="name-error"><?php echo $institution_name_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Address</label>
                 <input type="text" name="address" class="form-control <?php echo (!empty($institution_address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_address; ?>">
-                <span class="invalid-feedback"><?php echo $institution_address_err; ?></span>
+                <span class="invalid-feedback" id="address-error"><?php echo $institution_address_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Contact Person</label>
                 <input type="text" name="contact_person" class="form-control <?php echo (!empty($institution_contact_person_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_contact_person; ?>">
-                <span class="invalid-feedback"><?php echo $institution_contact_person_err; ?></span>
+                <span class="invalid-feedback" id="contact_person-error"><?php echo $institution_contact_person_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" name="phone" class="form-control <?php echo (!empty($institution_phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_phone; ?>">
-                <span class="invalid-feedback"><?php echo $institution_phone_err; ?></span>
+                <input type="tel" name="phone" id="phone" class="form-control <?php echo (!empty($institution_phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_phone; ?>"  oninput="validatePhone()">
+                <span class="invalid-feedback" id="phone-error"><?php echo $institution_phone_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control <?php echo (!empty($institution_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_email; ?>">
-                <span class="invalid-feedback"><?php echo $institution_email_err; ?></span>
+                <input type="email" name="email" id="email" class="form-control <?php echo (!empty($institution_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_email; ?>" oninput="validateEmail()">
+                <span class="invalid-feedback" id="email-error"><?php echo $institution_email_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Type</label>
-                <select name="type" id="type" class="form-control <?php echo (!empty($institution_type_err)) ? 'is-invalid' : ''; ?>">
+                <select name="type" id="type" class="form-control <?php echo (!empty($institution_type_err)) ? 'is-invalid' : ''; ?>" onchange="validateType()">
                     <option value="">Select type</option>
                     <option value="Institution" <?php if ($institution_type === 'Institution') echo 'selected'; ?>>Institution</option>
                     <option value="Vendor" <?php if ($institution_type === 'Vendor') echo 'selected'; ?>>Vendor</option>
                 </select>
-                <span class="invalid-feedback"><?php echo $institution_type_err; ?></span>
+                <span class="invalid-feedback" id="type-error"><?php echo $institution_type_err; ?></span>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Add Institution" name="add_institution">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <input type="reset" class="btn btn-secondary ml-2" value="Reset" onclick="resetValidation()">
             </div>
         </form>
 
@@ -202,6 +210,86 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
 
         <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
+
+<script>
+function validateForm() {
+    let isValid = true;
+    isValid = validateName() && isValid;
+    isValid = validatePhone() && isValid;
+    isValid = validateEmail() && isValid;
+    isValid = validateType() && isValid;
+    return isValid;
+}
+
+function resetValidation() {
+    document.getElementById('name-error').textContent = '';
+    document.getElementById('phone-error').textContent = '';
+    document.getElementById('email-error').textContent = '';
+    document.getElementById('type-error').textContent = '';
+    document.getElementById('name').classList.remove('is-invalid');
+    document.getElementById('phone').classList.remove('is-invalid');
+    document.getElementById('email').classList.remove('is-invalid');
+    document.getElementById('type').classList.remove('is-invalid');
+
+}
+function validateName() {
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+    if (!nameInput.value.trim()) {
+        nameError.textContent = 'Please enter a name.';
+        nameInput.classList.add('is-invalid');
+        return false;
+    } else {
+        nameError.textContent = '';
+        nameInput.classList.remove('is-invalid');
+        return true;
+    }
+}
+
+function validatePhone() {
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('phone-error');
+    const phoneValue = phoneInput.value.trim();
+    if (phoneValue && !/^[0-9]{10}$/.test(phoneValue)) {
+        phoneError.textContent = 'Phone number must be 10 digits only.';
+        phoneInput.classList.add('is-invalid');
+        return false;
+    } else {
+        phoneError.textContent = '';
+        phoneInput.classList.remove('is-invalid');
+        return true;
+    }
+}
+
+function validateEmail() {
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const emailValue = emailInput.value.trim();
+    if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        emailError.textContent = 'Invalid email format.';
+        emailInput.classList.add('is-invalid');
+        return false;
+    } else {
+        emailError.textContent = '';
+        emailInput.classList.remove('is-invalid');
+        return true;
+    }
+}
+function validateType() {
+    const typeInput = document.getElementById('type');
+    const typeError = document.getElementById('type-error');
+    if (!typeInput.value) {
+        typeError.textContent = 'Please select a type.';
+        typeInput.classList.add('is-invalid');
+        return false;
+    } else {
+        typeError.textContent = '';
+        typeInput.classList.remove('is-invalid');
+        return true;
+    }
+}
+
+</script>
 </body>
 
 </html>
