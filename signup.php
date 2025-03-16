@@ -78,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($stmt = $conn->prepare($sql)) {
 
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->bind_param("sssii", $username, $hashed_password, $role, $institution_id, $email); //Added email to bind param
+            $stmt->bind_param("ssssi", $username, $hashed_password, $role, $institution_id, $email); //Added email to bind param
 
 
             if ($stmt->execute()) {
