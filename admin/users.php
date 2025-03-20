@@ -207,8 +207,8 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
             </div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Add User" name="add_user">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <input type="submit" class="btn button-40" value="Add User" name="add_user">
+                <input type="reset" class="btn button-40 ml-2" value="Reset">
             </div>
         </form>
 
@@ -237,7 +237,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
                                 <td><?php echo htmlspecialchars($user['role']); ?></td>
                                 <td><?php echo htmlspecialchars($user['institution_id'] ?? 'N/A'); ?></td>
                                 <td class="action-buttons">
-                                    <a href="?delete_user=<?php echo $user['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                                    <a href="?delete_user=<?php echo $user['id']; ?>" class="btn button-40 btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -250,7 +250,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
         <hr>
 
 
-        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn button-40 ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

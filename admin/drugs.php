@@ -173,8 +173,8 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
             </div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Add Drug" name="add_drug">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <input type="submit" class="btn button-40" value="Add Drug" name="add_drug">
+                <input type="reset" class="btn button-40 ml-2" value="Reset">
             </div>
         </form>
 
@@ -205,7 +205,7 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
                                 <td><?php echo htmlspecialchars($drug['manufacturer_name'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($drug['short_composition1'] ?? 'N/A'); ?></td>
                                 <td class="action-buttons">
-                                    <a href="?delete_drug=<?php echo $drug['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this drug?')">Delete</a>
+                                    <a href="?delete_drug=<?php echo $drug['id']; ?>" class="btn button-40 btn-sm" onclick="return confirm('Are you sure you want to delete this drug?')">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -252,7 +252,7 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
         <hr>
 
 
-        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn button-40 ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

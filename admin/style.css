@@ -1,8 +1,8 @@
 body {
     font-family: 'Roboto', sans-serif; /* Apply Roboto font */
     font-size: 16px;
-    color: #333; /* Dark gray text color */
-    background-color: #f8f9fa; /* Light gray background */
+    color: #b4bdc7; /* Dark gray text color */
+    background-color:black; /* Light gray background */
     margin: 0; /* Reset default margin */
     padding: 0; /* Reset default padding */
 }
@@ -11,13 +11,13 @@ body {
     width: 1200px;
     padding: 20px;
     margin: 20px auto; /* Add margin around wrapper */
-    background-color: #fff; /* White container background */
+    background-color: #111827; /* White container background */
     border-radius: 5px; /* Optional: Rounded corners for container */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+    box-shadow: 0 0 10px rgba(247, 241, 241, 0.1); /*Optional: Subtle shadow*/
 }
 
 h2, h3 {
-    color: #343a40; /* Slightly darker heading color */
+    color: #f0f1f3; /* Slightly darker heading color */
     margin-top: 20px;
     margin-bottom: 15px;
     font-weight: 500; /* Medium font weight for headings */
@@ -44,7 +44,7 @@ nav li {
 nav a {
     display: block;
     padding: 10px 15px;
-    color: #495057; /* Gray link color */
+    color: #b4bdc7; /* Gray link color */
     text-decoration: none;
     border-radius: 5px; /* Rounded corners for links */
     transition: background-color 0.3s ease; /* Smooth hover effect */
@@ -103,12 +103,16 @@ nav a.active {
 }
 
 .btn-danger {
-    background-color: #dc3545; /* Bootstrap danger red */
+    background-color: #6c757d; /* Bootstrap danger red */
     color: white;
 }
 
 .btn-danger:hover {
-    background-color: #c82333; /* Darker red on hover */
+    background-color: #545b62; /* Darker red on hover */
+}
+
+.btn:hover{
+    color: #FFFFFF;
 }
 
 .pagination {
@@ -165,6 +169,7 @@ nav a.active {
     border: none; /* Remove individual cell borders */
     padding: 10px 12px;
     text-align: left;
+    color: #f0f1f3;
 }
 
 .table th {
@@ -175,7 +180,7 @@ nav a.active {
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Very light gray for even rows */
+    background-color: #111827;  
 }
 
 .table tbody tr:last-child td {
@@ -200,7 +205,7 @@ nav a.active {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #555; /* Gray label color */
+    color: #f0f1f3; /* Gray label color */
     font-weight: 500; /* Medium font weight for labels */
 }
 
@@ -210,3 +215,84 @@ nav a.active {
     margin-top: -5px;
     margin-bottom: 10px;
 }
+
+/* CSS */
+.button-40 {
+    background-color: #2a55b1;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: .75rem 1.2rem;
+    text-align: center;
+    text-decoration: none #b7b8bb solid;
+    text-decoration-thickness: auto;
+    transition-duration: .2s;
+    transition-property: background-color,border-color,color,fill,stroke;
+    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+  }
+  
+  .button-40:hover {
+    background-color: #192f53;
+  }
+  
+  .button-40:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  
+  @media (min-width: 768px) {
+    .button-40 {
+      padding: .75rem 1.5rem;
+    }
+  }
+  
+  .footer-content p {
+      color: #9ca3af;
+  }
+  
+  @keyframes fade-in {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+  
+  .funnel-sans-font {
+      font-family: "Funnel Sans", serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+  }
+  
+  @media (max-width: 768px) {
+      .search-container {
+          width: 90%;
+      }
+      
+      #searchResults table {
+          width: 100%;
+      }
+      
+      .footer-content {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+      }
+  }
+  
