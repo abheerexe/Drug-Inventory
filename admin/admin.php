@@ -33,7 +33,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
                 <li><a href="institutions.php">Institutions</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="admin.php">Dashboard</a></li>  <!-- Link to admin.php - which is this page itself -->
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="requests.php">Manage Requests</a></li>  <!-- Link to admin.php - which is this page itself -->
                 <li><a href="../logout.php">Logout</a></li>
             </ul>
         </nav>

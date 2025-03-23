@@ -13,8 +13,8 @@ $username = $_SESSION['username'];
 $inventory_err = "";
 $inventory = [];
 
-// Fetch institution inventory
-$inventory_sql = "SELECT ii.quantity, d.name AS drug_name, d.strength, d.dosage_form, d.manufacturer_name
+// Fetch institution inventory - MODIFIED QUERY: Removed strength and dosage_form
+$inventory_sql = "SELECT ii.quantity, d.name AS drug_name, d.manufacturer_name
                   FROM institution_inventory ii
                   JOIN drugs d ON ii.drug_id = d.id
                   WHERE ii.institution_id = ?";
@@ -68,21 +68,21 @@ if ($inventory_result) {
                 <thead>
                     <tr>
                         <th>Drug Name</th>
-                        <th>Strength</th>
-                        <th>Dosage Form</th>
+                        <!-- Removed Strength Header -->
+                        <!-- Removed Dosage Form Header -->
                         <th>Manufacturer</th>
                         <th>Quantity on Hand</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($inventory)): ?>
-                        <tr><td colspan="5">Inventory is empty.</td></tr>
+                        <tr><td colspan="4">Inventory is empty.</td></tr> <!-- Adjusted colspan to 4 -->
                     <?php else: ?>
                         <?php foreach ($inventory as $item): ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($item['drug_name']); ?></td>
-                                <td><?php echo htmlspecialchars($item['strength']); ?></td>
-                                <td><?php echo htmlspecialchars($item['dosage_form']); ?></td>
+                                <!-- Removed Strength Data -->
+                                <!-- Removed Dosage Form Data -->
                                 <td><?php echo htmlspecialchars($item['manufacturer_name']); ?></td>
                                 <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                             </tr>

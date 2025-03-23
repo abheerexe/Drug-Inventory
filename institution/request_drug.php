@@ -58,13 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
-// Fetch Drugs for Dropdown
-$drugs_sql = "SELECT id, name, strength, dosage_form FROM drugs ORDER BY name";
-$drugs_result = executeQuery($conn, $drugs_sql);
-$drugs = $drugs_result ? $drugs_result->fetch_all(MYSQLI_ASSOC) : [];
-
-
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +71,11 @@ $drugs = $drugs_result ? $drugs_result->fetch_all(MYSQLI_ASSOC) : [];
         .wrapper { width: 800px; padding: 20px; margin: 0 auto; }
         .dashboard-nav { margin-bottom: 20px; }
         .dashboard-nav a { margin-right: 10px; }
+        #drugSearchInput { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        #drugList { border: 1px solid #ddd; max-height: 200px; overflow-y: auto; margin-bottom: 10px; position: absolute; background-color: white; z-index: 1000; width: 95%; display: none; } /* Initially hidden */
+        #drugList div { padding: 8px; cursor: pointer; }
+        #drugList div:hover { background-color: #f0f0f0; }
+        .selected-drug { background-color: #e0e0e0; } /* Style for selected drug */
     </style>
 </head>
 <body>
@@ -98,17 +96,15 @@ $drugs = $drugs_result ? $drugs_result->fetch_all(MYSQLI_ASSOC) : [];
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>Select Drug</label>
-                <select name="drug_id" id="drug_id" class="form-control <?php echo (!empty($request_drug_err)) ? 'is-invalid' : ''; ?>" required>
-                    <option value="">Select Drug</option>
-                    <?php if (!empty($drugs)): ?>
-                        <?php foreach ($drugs as $drug): ?>
-                            <option value="<?php echo $drug['id']; ?>" <?php if($drug_id == $drug['id']) echo 'selected'; ?>><?php echo htmlspecialchars($drug['name'] . ' (' . $drug['strength'] . ' ' . $drug['dosage_form'] . ')'); ?></option>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
+                <label>Search Drug</label>
+                <input type="text" id="drugSearchInput" placeholder="Type to search drugs..." class="form-control <?php echo (!empty($request_drug_err)) ? 'is-invalid' : ''; ?>" oninput="filterDrugs()">
+                <div id="drugList">
+                    <!-- Drug suggestions will be loaded here via AJAX -->
+                </div>
+                <input type="hidden" name="drug_id" id="selectedDrugId" value="<?php echo $drug_id; ?>">
                 <span class="invalid-feedback"><?php echo $request_drug_err; ?></span>
             </div>
+
             <div class="form-group">
                 <label>Quantity</label>
                 <input type="number" name="quantity" id="quantity" class="form-control <?php echo (!empty($request_quantity_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $quantity; ?>" min="1" required>
@@ -123,6 +119,85 @@ $drugs = $drugs_result ? $drugs_result->fetch_all(MYSQLI_ASSOC) : [];
 
         <p><a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
     </div>
+
+    <script>
+        const drugSearchInput = document.getElementById('drugSearchInput');
+        const drugListDiv = document.getElementById('drugList');
+        const selectedDrugIdInput = document.getElementById('selectedDrugId');
+        let selectedDrugElement = null;
+        let lastSearchTerm = '';
+        let searchTimeout;
+
+        drugSearchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+
+            // Only make a request if the search term has changed and is not empty
+            if (searchTerm !== lastSearchTerm && searchTerm.length > 0) {
+                // Set a **reduced** delay for more "letter by letter" feel (e.g., 100ms)
+                // For truly instant, you could set delay to 0 or remove setTimeout entirely (see notes below!)
+                searchTimeout = setTimeout(function() {
+                    fetchDrugs(searchTerm);
+                    lastSearchTerm = searchTerm;
+                }, 100); // Reduced debounce delay to 100ms
+            } else if (searchTerm.length === 0) {
+                drugListDiv.style.display = 'none'; // Hide the list when the input is empty
+                drugListDiv.innerHTML = '';
+                lastSearchTerm = '';
+            }
+        });
+
+        function fetchDrugs(searchTerm) {
+            fetch('fetch_drugs.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'searchTerm=' + encodeURIComponent(searchTerm)
+            })
+            .then(response => response.json())
+            .then(data => {
+                drugListDiv.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(drug => {
+                        const div = document.createElement('div');
+                        div.dataset.drugId = drug.id;
+                        div.textContent = drug.name;
+                        div.addEventListener('click', function() {
+                            selectDrug(this);
+                        });
+                        drugListDiv.appendChild(div);
+                    });
+                    drugListDiv.style.display = 'block';
+                } else {
+                    drugListDiv.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching drugs:', error);
+                drugListDiv.style.display = 'none';
+                drugListDiv.innerHTML = '<div class="text-danger">Error loading drugs.</div>';
+            });
+        }
+
+        function selectDrug(drugElement) {
+            if (selectedDrugElement) {
+                selectedDrugElement.classList.remove('selected-drug');
+            }
+            drugElement.classList.add('selected-drug');
+            selectedDrugElement = drugElement;
+
+            const drugId = drugElement.dataset.drugId;
+            selectedDrugIdInput.value = drugId;
+            drugSearchInput.value = drugElement.textContent;
+            drugListDiv.style.display = 'none'; // Collapse the list after selection
+        }
+
+        // Hide the drug list initially
+        drugListDiv.style.display = 'none';
+    </script>
 </body>
 </html>
 <?php
