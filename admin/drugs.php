@@ -132,11 +132,12 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
     <div class="wrapper">
         <h2>Admin Dashboard</h2>
         <nav>
-            <ul>
+        <ul>
+                <li><a href="admin.php">Dashboard</a></li>
                 <li><a href="institutions.php">Institutions</a></li>
                 <li><a href="users.php">Users</a></li>
-                <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="drugs.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Drugs</a></li>
+                <li><a href="requests.php">Manage Requests</a></li>  
                 <li><a href="../logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -252,7 +253,7 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
         <hr>
 
 
-        <a href="../logout.php" class="btn button-40 ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

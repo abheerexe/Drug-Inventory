@@ -157,12 +157,13 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
     <div class="wrapper">
         <h2>Admin Dashboard</h2>
         <nav>
-            <ul>
-                <li><a href="institutions.php">Institutions</a></li>
-                <li><a href="users.php">Users</a></li>
-                <li><a href="drugs.php">Drugs</a></li>
+        <ul>
                 <li><a href="admin.php">Dashboard</a></li>
-                <li><a href="../logout.php">Logout</a></li>
+                <li><a href="institutions.php">Institutions</a></li>
+                <li><a href="users.php"   style="text-decoration: underline;text-underline-offset:0.2em;">Users</a></li>
+                <li><a href="drugs.php">Drugs</a></li>
+                <li><a href="requests.php">Manage Requests</a></li>  
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
         <hr/>
@@ -250,7 +251,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
         <hr>
 
 
-        <a href="../logout.php" class="btn button-40 ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

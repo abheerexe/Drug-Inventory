@@ -37,7 +37,8 @@ if ($requests_result) {
     <meta charset="UTF-8">
     <title>View Requests</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>
         body { font: 14px sans-serif; }
         .wrapper { width: 90%; padding: 20px; margin: 0 auto; } /* Wider wrapper */
         .dashboard-nav { margin-bottom: 20px; }
@@ -47,19 +48,22 @@ if ($requests_result) {
         .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .table th { background-color: #f2f2f2; font-weight: bold; }
         .table tbody tr:nth-child(even) { background-color: #f9f9f9; }
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="wrapper">
         <h2>View Drug Requests</h2>
         <p>Viewing Requests for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
 
-        <div class="dashboard-nav">
-            <a href="dashboard.php" class="btn btn-primary">Dashboard</a>
-            <a href="inventory.php" class="btn btn-primary">View Inventory</a>
-            <a href="request_drug.php" class="btn btn-primary">Request Drugs</a>
-            <a href="requests.php" class="btn btn-primary">View Requests</a>
-        </div>
+        <nav>
+            <ul>
+            <a href="dashboard.php">Dashboard</a>
+            <a href="inventory.php" >View Inventory</a>
+            <a href="request_drug.php">Request Drugs</a>
+            <a href="requests.php" style="text-decoration: underline;text-underline-offset:0.2em;">View Requests</a>
+            <a href="bill.php">Generate Bill</a>
+</ul>
+</nav>
 
         <?php if (!empty($requests_err)): ?>
             <div class="alert alert-danger"><?php echo $requests_err; ?></div>

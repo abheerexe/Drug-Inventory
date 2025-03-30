@@ -66,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Request Drugs</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>
         body { font: 14px sans-serif; }
         .wrapper { width: 800px; padding: 20px; margin: 0 auto; }
         .dashboard-nav { margin-bottom: 20px; }
@@ -76,19 +77,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #drugList div { padding: 8px; cursor: pointer; }
         #drugList div:hover { background-color: #f0f0f0; }
         .selected-drug { background-color: #e0e0e0; } /* Style for selected drug */
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="wrapper">
         <h2>Request Drugs</h2>
         <p>Request Drugs for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
 
-        <div class="dashboard-nav">
-            <a href="dashboard.php" class="btn btn-primary">Dashboard</a>
-            <a href="inventory.php" class="btn btn-primary">View Inventory</a>
-            <a href="request_drug.php" class="btn btn-primary">Request Drugs</a>
-            <a href="requests.php" class="btn btn-primary">View Requests</a>
-        </div>
+        <nav>
+            <ul>
+            <a href="dashboard.php">Dashboard</a>
+            <a href="inventory.php" >View Inventory</a>
+            <a href="request_drug.php" style="text-decoration: underline;text-underline-offset:0.2em;">Request Drugs</a>
+            <a href="requests.php">View Requests</a>
+            <a href="bill.php">Generate Bill</a>
+</ul>
+</nav>
 
         <?php if (!empty($request_success_message)): ?>
             <div class="alert alert-success"><?php echo $request_success_message; ?></div>
@@ -112,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit Request">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <input type="reset" class="btn btn-primary ml-2" value="Reset">
             </div>
         </form>
 

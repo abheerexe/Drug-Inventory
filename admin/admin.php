@@ -30,12 +30,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
         <h2>Admin Dashboard</h2>
         <nav>
             <ul>
+                <li><a href="admin.php" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li><!-- Link to admin.php - which is this page itself -->
                 <li><a href="institutions.php">Institutions</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="admin.php">Dashboard</a></li>
-                <li><a href="requests.php">Manage Requests</a></li>  <!-- Link to admin.php - which is this page itself -->
-                <li><a href="../logout.php">Logout</a></li>
+                <li><a href="requests.php">Manage Requests</a></li>  
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
         <hr/>
@@ -55,7 +55,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
 
         <hr>
 
-        <a href="../logout.php" class="button-40 btn ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

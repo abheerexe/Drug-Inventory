@@ -18,8 +18,7 @@ $update_message = ""; // Success/error message for updates
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
     $action = $_POST['action']; // 'Approve' or 'Reject'
-    $supplier_notes = trim($_POST['supplier_notes']);
-
+    $supplier_notes = isset($_POST['supplier_notes']) ? trim($_POST['supplier_notes']) : '';
     // Validate action (optional, but good practice)
     if (!in_array($action, ['Approved', 'Rejected'])) {
         $update_message = "<div class='alert alert-danger'>Invalid action.</div>";
@@ -111,7 +110,8 @@ if ($requests_result) {
     <meta charset="UTF-8">
     <title>Process Requests</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>
         body { font: 14px sans-serif; }
         .wrapper { width: 95%; padding: 20px; margin: 0 auto; } /* Wider wrapper */
         .dashboard-nav { margin-bottom: 20px; }
@@ -123,21 +123,23 @@ if ($requests_result) {
         .table tbody tr:nth-child(even) { background-color: #f9f9f9; }
         .action-buttons button { margin-right: 5px; }
         textarea { width: 100%; box-sizing: border-box; }
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="wrapper">
         <h2>Process Drug Requests</h2>
         <p>Manage and process pending drug requests.</p>
 
-        <div class="dashboard-nav">
-            <a href="admin.php" class="btn btn-primary">Dashboard</a>
-            <a href="users.php" class="btn btn-primary">Manage Users</a>
-            <a href="drugs.php" class="btn btn-primary">Manage Drugs</a>
-            <a href="requests.php" class="btn btn-primary">Process Requests</a>
-            <a href="bills.php" class="btn btn-primary">Generate Bills</a>
-            <a href="reports.php" class="btn btn-primary">Reports</a>
-        </div>
+        <nav>
+        <ul>
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="institutions.php">Institutions</a></li>
+                <li><a href="users.php">Users</a></li>
+                <li><a href="drugs.php">Drugs</a></li>
+                <li><a href="requests.php"   style="text-decoration: underline;text-underline-offset:0.2em;">Manage Requests</a></li>  
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+</nav>
 
         <?php echo $update_message; ?> <?php //Display update message ?>
 
