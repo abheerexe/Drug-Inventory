@@ -1,4 +1,9 @@
 <?php
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+header("Pragma: no-cache"); // HTTP 1.0.
+header("Expires: 0"); // Proxies.
+
+
 session_start();
 require_once '../database.php'; // Ensure this path is correct!
 
@@ -35,8 +40,9 @@ if (isset($_GET['date']) && isset($_GET['request_ids'])) {
     // Security: Double-check that ALL request IDs belong to the institution AND are "Approved"
     $check_sql = "SELECT COUNT(*) FROM requests WHERE id IN ($request_ids_placeholders) AND institution_id = ? AND status = 'Approved'";
 
-    $types = str_repeat('i', count($request_ids)) . 'i'; // Types for prepared statement
-    $params = array_merge($request_ids, [$institution_id]);
+    // Corrected $types and $params for check_sql
+    $types = str_repeat('i', count($request_ids)) . 'i'; // Types for prepared statement - Corrected: Kept extra 'i' for institution_id
+    $params = array_merge($request_ids, [$institution_id]); // Corrected: kept institution_id as parameter
 
     $check_result = executeQuery($conn, $check_sql, $types, ...$params);
 
@@ -59,6 +65,10 @@ if (isset($_GET['date']) && isset($_GET['request_ids'])) {
                    JOIN drugs d ON r.drug_id = d.id
                    WHERE r.id IN ($request_ids_placeholders)
                    ORDER BY r.request_date";
+
+    // Corrected $types and $params for bill_sql
+    $types = str_repeat('i', count($request_ids)); // Corrected: Removed extra 'i'
+    $params = $request_ids; // Corrected: Removed institution_id from params
 
     $bill_result = executeQuery($conn, $bill_sql, $types, ...$params);
 
