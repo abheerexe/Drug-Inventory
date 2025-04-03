@@ -1,7 +1,7 @@
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 session_start();
 require_once '../database.php';
@@ -69,44 +69,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Request Drugs</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <!-- <style>
-        body { font: 14px sans-serif; }
-        .wrapper { width: 800px; padding: 20px; margin: 0 auto; }
-        .dashboard-nav { margin-bottom: 20px; }
-        .dashboard-nav a { margin-right: 10px; }
-        #drugSearchInput { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
-        #drugList { border: 1px solid #ddd; max-height: 200px; overflow-y: auto; margin-bottom: 10px; position: absolute; background-color: white; z-index: 1000; width: 95%; display: none; } /* Initially hidden */
-        #drugList div { padding: 8px; cursor: pointer; }
-        #drugList div:hover { background-color: #f0f0f0; }
-        .selected-drug { background-color: #e0e0e0; } /* Style for selected drug */
-    </style> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Added viewport meta tag -->
+    <link rel="stylesheet" href="style.css"> <!-- Linked to style.css -->
+    <!-- Bootstrap CSS link and inline styles removed -->
 </head>
 <body>
     <div class="wrapper">
         <h2>Request Drugs</h2>
-        <p>Request Drugs for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
-
-        <nav>
+        <nav class="no-print">
+            <button class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="inventory.php" >View Inventory</a>
-            <a href="request_drug.php" style="text-decoration: underline;text-underline-offset:0.2em;">Request Drugs</a>
-            <a href="requests.php">View Requests</a>
-            <a href="bill.php">Generate Bill</a>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="inventory.php" >View Inventory</a></li>
+            <li><a href="request_drug.php" class="active" style="text-decoration: underline;text-underline-offset:0.2em;">Request Drugs</a></li> <!-- Added 'active' class to Request Drugs link -->
+            <li><a href="requests.php">View Requests</a></li>
+            <li><a href="bill.php">Generate Bill</a></li>
 </ul>
 </nav>
+        <p>Request Drugs for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
+
+
 
         <?php if (!empty($request_success_message)): ?>
-            <div class="alert alert-success"><?php echo $request_success_message; ?></div>
+            <div class="alert alert-success"><?php echo $request_success_message; ?></div> <!-- Kept alert classes if you intend to style them -->
         <?php endif; ?>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Search Drug</label>
                 <input type="text" id="drugSearchInput" placeholder="Type to search drugs..." class="form-control <?php echo (!empty($request_drug_err)) ? 'is-invalid' : ''; ?>" oninput="filterDrugs()">
-                <div id="drugList">
+                <div id="drugList" class="table-responsive"> <!-- Added table-responsive class for drug list -->
                     <!-- Drug suggestions will be loaded here via AJAX -->
                 </div>
                 <input type="hidden" name="drug_id" id="selectedDrugId" value="<?php echo $drug_id; ?>">
@@ -119,16 +115,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="invalid-feedback"><?php echo $request_quantity_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit Request">
-                <input type="reset" class="btn btn-primary ml-2" value="Reset">
+                <input type="submit" class="btn btn-primary" value="Submit Request"> <!-- Kept btn and btn-primary classes -->
+                <input type="reset" class="btn btn-secondary ml-2" value="Reset"> <!-- Changed reset button to btn-secondary and kept ml-2 class -->
             </div>
         </form>
 
-
-        <p><a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
+        <p class="no-print"><a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p> <!-- Kept btn and btn-danger classes -->
     </div>
 
     <script>
+        // JavaScript code (same as before) for drug search and selection
         const drugSearchInput = document.getElementById('drugSearchInput');
         const drugListDiv = document.getElementById('drugList');
         const selectedDrugIdInput = document.getElementById('selectedDrugId');
@@ -205,6 +201,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Hide the drug list initially
         drugListDiv.style.display = 'none';
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('nav');
+
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
+                });
+            }
+        });
     </script>
 </body>
 </html>

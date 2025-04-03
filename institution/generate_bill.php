@@ -80,9 +80,10 @@ if (isset($_GET['date']) && isset($_GET['request_ids'])) {
         echo "<meta charset='UTF-8'>";
         echo "<title>Bill for " . htmlspecialchars($date) . "</title>";
         echo "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>"; // Optional: Bootstrap CSS
+        echo "<link rel='stylesheet' href='style.css'>";
         echo "</head>";
         echo "<body>";
-        echo "<div class='container'>"; // Optional: Bootstrap container
+        echo "<div class='wrapper'>"; // Optional: Bootstrap container
 
         echo "<h1>Bill for Date: " . htmlspecialchars($date) . "</h1>";
         echo "<table class='table table-bordered'>"; // Optional: Bootstrap table styling
@@ -106,6 +107,7 @@ if (isset($_GET['date']) && isset($_GET['request_ids'])) {
         echo "<tr><td colspan='4' style='text-align:right;'><b>Total Bill:</b></td><td><b>" . htmlspecialchars(number_format($total_bill, 2)) . "</b></td></tr>"; //Format to 2 decimal places
         echo "</tbody>";
         echo "</table>";
+        echo "<button onclick='window.print()' class='btn btn-primary ml-3 no-print'>Print</button>";
 
         echo "</div>"; // Optional: Bootstrap container
         echo "</body>";

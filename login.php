@@ -52,10 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Redirect to appropriate page based on role
                 if ($row["role"] == "Admin") {
                     header("location: admin/admin.php");
-                } else if($row['role'] === 'Super Admin') {
+                } elseif ($row['role'] === 'Super Admin') {
                     header("location: super_admin_dashboard.php");
-                } else if ($row['role'] === "Institution Staff") {
+                } elseif ($row['role'] === "Institution Staff") {
                     header("location: institution/dashboard.php");
+                } elseif ($row['role'] === "Supplier") { // ADD THIS CONDITION
+                    header("location: supplier/dashboard.php"); // Redirect Supplier to supplier/dashboard.php (create this file)
                 } else {
                     header("location: index.php");
                 }

@@ -5,10 +5,10 @@ header("Expires: 0"); // Proxies.
 ?>
 <?php
 
-session_start();  // Start the session at the very beginning
+session_start();
 require 'database.php';
 
-// Check if the user is already logged in, if yes then redirect him to the home page
+// Check if already logged in
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: index.php");
     exit;
@@ -21,13 +21,12 @@ $username_err = $password_err = $confirm_password_err = $role_err = $institution
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    // Validate username
+    // Validate username (No changes needed)
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
     } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
         $username_err = "Username can only contain letters, numbers, and underscores.";
     } else {
-        // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
         $result = executeQuery($conn, $sql, 's', trim($_POST["username"]));
 
@@ -38,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
-    // Validate password
+    // Validate password (No changes needed)
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";
     } elseif(strlen(trim($_POST["password"])) < 6){
@@ -47,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password = trim($_POST["password"]);
     }
 
-    // Validate confirm password
+    // Validate confirm password (No changes needed)
     if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Please confirm password.";
     } else{
@@ -57,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
-    // Validate Email
+    // Validate Email (No changes needed)
     if(empty(trim($_POST["email"]))){
         $email_err = "Please enter an email address.";
     } elseif(!filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL)){
@@ -66,17 +65,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email = trim($_POST["email"]);
     }
 
-    // Fixed role (Institution Staff) - No longer in the form
-    $role = "Institution Staff";
-
-    if (empty($_POST['institution'])) {
-        $institution_err = "Please select an institution";
-    } else {
-        $institution_id = $_POST['institution'];
+    // Validate Role
+    if(empty($_POST["role"])){
+        $role_err = "Please select a role.";
+    } else{
+        $role = $_POST["role"];
     }
 
+    // Validate institution - Required only for 'Institution Staff' role
+    if($_POST["role"] === 'Institution Staff' && empty($_POST["institution"])){
+        $institution_err = "Please select an institution for Institution Staff.";
+    }else if($_POST["role"] === 'Institution Staff' && !empty($_POST["institution"])){
+        $institution_id = $_POST['institution'];
+    } else {
+        $institution_id = NULL; // Set institution_id to NULL for other roles (Admin, Supplier)
+    }
+
+
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($institution_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($institution_err) && empty($role_err) && empty($email_err)){
 
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password, role, institution_id, email) VALUES (?, ?, ?, ?, ?)";
@@ -84,16 +91,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($stmt = $conn->prepare($sql)) {
 
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->bind_param("ssssi", $username, $hashed_password, $role, $institution_id, $email); //Added email to bind param
+            $stmt->bind_param("ssssi", $username, $hashed_password, $role, $institution_id, $email); //Bind param with email
 
-
-            if ($stmt->execute()) {
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Redirect to login page
                 header("location: login.php");
-                exit(); //Important to exit.
-            } else {
-                echo "Error: " . $stmt->error; //Provide error from prepared statement
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
             }
 
+            // Close statement
             $stmt->close();
         }else{
             echo "Error in preparing statement: " . $conn->error;
@@ -101,9 +109,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 
-// Fetch institutions for dropdown
+// Fetch institutions for dropdown (No changes needed)
 $institutions = [];
-$institutionQuery = "SELECT id, name from institutions";
+$institutionQuery = "SELECT id, name from institutions WHERE name != 'admin'"; // Modified query to exclude 'admin'
 $institutionResult = $conn->query($institutionQuery);
 if ($institutionResult) {
     while($row = $institutionResult->fetch_assoc()){
@@ -112,7 +120,7 @@ if ($institutionResult) {
     $institutionResult->free_result();
 }
 
-//Close connection
+//Close connection (No changes needed)
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -138,12 +146,13 @@ $conn->close();
 
                 <div id="alertBox" class="alert" style="display: none;"></div>
                 <?php
-                if(!empty($username_err) || !empty($password_err) || !empty($confirm_password_err) || !empty($institution_err) || !empty($email_err)){
+                if(!empty($username_err) || !empty($password_err) || !empty($confirm_password_err) || !empty($institution_err) || !empty($role_err) || !empty($email_err)){
                     echo '<div class="alert">';
                     echo !empty($username_err) ? $username_err . '<br>' : '';
                     echo !empty($password_err) ? $password_err . '<br>' : '';
                     echo !empty($confirm_password_err) ? $confirm_password_err . '<br>' : '';
                     echo !empty($institution_err) ? $institution_err . '<br>' : '';
+                    echo !empty($role_err) ? $role_err . '<br>' : '';
                     echo !empty($email_err) ? $email_err : '';
                     echo '</div>';
                 }
@@ -180,31 +189,33 @@ $conn->close();
                     <select name="role" id="role" required>
                         <option value="">--Select Role--</option>
                         <option value="Institution Staff" <?php echo ($role === "Institution Staff") ? "selected" : ""; ?>>Institution Staff</option>
+                        <option value="Supplier" <?php echo ($role === "Supplier") ? "selected" : ""; ?>>Supplier</option>  <!-- Added Supplier Role -->
                     </select>
+                    <span id="role-error" class="error-message"></span>
                 </div>
 
                 <div class="form-group" id="institutionDiv" style="display: none;">
-    <label for="institution">Institution</label>
-    <select name="institution" id="institution">
-        <option value="">Select an institution</option>
-        <?php
-        $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName); // Re-establish connection - important!
-        $institutionQuery = "SELECT id, name from institutions WHERE name != 'admin'"; // Modified query to exclude 'admin'
-        $institutionResult = $conn->query($institutionQuery);
-        if ($institutionResult) { // Added check if $institutionResult is valid
-            while($row = $institutionResult->fetch_assoc()){
-                $selected = ($institution_id == $row['id']) ? 'selected' : '';
-                echo "<option value='" . $row['id'] . "' " . $selected . ">" . htmlspecialchars($row['name']) . "</option>";
-            }
-            $institutionResult->free_result(); // Free result set
-        } else {
-            // Handle query error if needed, e.g., echo "Error fetching institutions";
-        }
-        $conn->close(); // Close the connection here as well, to be safe
-        ?>
-    </select>
-    <span id="institution-error" class="error-message"></span>
-</div>
+                    <label for="institution">Institution</label>
+                    <select name="institution" id="institution">
+                        <option value="">Select an institution</option>
+                        <?php
+                        $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName); // Re-establish connection - important!
+                        $institutionQuery = "SELECT id, name from institutions WHERE name != 'admin'";
+                        $institutionResult = $conn->query($institutionQuery);
+                        if ($institutionResult) {
+                            while($row = $institutionResult->fetch_assoc()){
+                                $selected = ($institution_id == $row['id']) ? 'selected' : '';
+                                echo "<option value='" . $row['id'] . "' " . $selected . ">" . htmlspecialchars($row['name']) . "</option>";
+                            }
+                            $institutionResult->free_result();
+                        } else {
+                            // Handle query error if needed, e.g., echo "Error fetching institutions";
+                        }
+                        $conn->close(); // Close the connection here as well, to be safe
+                        ?>
+                    </select>
+                    <span id="institution-error" class="error-message"></span>
+                </div>
 
                 <div class="button-group">
                     <button type="submit" class="button-40">Sign Up</button>
@@ -225,17 +236,19 @@ $conn->close();
         const confirmPassword = document.getElementById('confirm_password').value;
         const role = document.getElementById('role').value;
         const institution = document.getElementById('institution').value;
-        const email = document.getElementById('email').value; // Get email input value
+        const email = document.getElementById('email').value;
         const alertBox = document.getElementById('alertBox');
-        const emailErrorSpan = document.getElementById('email-error'); // Get email error span
-        const passwordErrorSpan = document.getElementById('password-error'); // Get password error span
+        const emailErrorSpan = document.getElementById('email-error');
+        const passwordErrorSpan = document.getElementById('password-error');
         const confirmPasswordErrorSpan = document.getElementById('confirm_password-error');
+        const roleErrorSpan = document.getElementById('role-error'); // Get role error span
+
 
         // Client-side validation
         let message = "";
         let hasError = false;
 
-        if (!username || !password || !confirmPassword || !role || !email) { // Added email to required check
+        if (!username || !password || !confirmPassword || !role || !email) { // Added role to required check
             message = "Please fill in all required fields.";
             hasError = true;
         } else if (password !== confirmPassword) {
@@ -247,14 +260,17 @@ $conn->close();
         } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/.test(password)) {
             message = "Password must contain at least 6 characters with 1 uppercase, 1 lowercase, and 1 special character.";
             hasError = true;
-        }
-         else if (role === 'Institution Staff' && !institution) {
+        } else if (role === 'Institution Staff' && !institution) {
             message = "Please select an institution.";
             hasError = true;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { // Email validation regex
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             message = "Invalid email format.";
             hasError = true;
+        } else if (!role) { // Added role validation
+            message = "Please select a role.";
+            hasError = true;
         }
+
 
         if (hasError) {
             e.preventDefault();
@@ -272,7 +288,7 @@ $conn->close();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
             emailErrorSpan.textContent = "Invalid email format.";
         } else {
-            emailErrorSpan.textContent = ""; // Clear error message if valid
+            emailErrorSpan.textContent = "";
         }
     }
 
@@ -303,22 +319,25 @@ $conn->close();
         if (!isValid) {
             passwordErrorSpan.textContent = passwordMessage.trim();
         } else {
-            passwordErrorSpan.textContent = ""; // Clear error message if valid
+            passwordErrorSpan.textContent = "";
         }
     }
-
 
     // Show/hide institution select based on role
     document.getElementById('role').addEventListener('change', function() {
         const institutionDiv = document.getElementById('institutionDiv');
-        institutionDiv.style.display = this.value === 'Institution Staff' ? 'block' : 'none';
+        const selectedRole = this.value;
+        institutionDiv.style.display = selectedRole === 'Institution Staff' ? 'block' : 'none'; //Hide for other roles
     });
 
     // Trigger the change event on page load if role is pre-selected
     window.addEventListener('load', function() {
         const roleSelect = document.getElementById('role');
+        const institutionDiv = document.getElementById('institutionDiv');
         if (roleSelect.value === 'Institution Staff') {
-            document.getElementById('institutionDiv').style.display = 'block';
+            institutionDiv.style.display = 'block';
+        } else {
+            institutionDiv.style.display = 'none'; // Hide for other roles on page load
         }
     });
     </script>

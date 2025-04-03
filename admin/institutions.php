@@ -91,27 +91,30 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
 <html lang="en">
 
 <head>
-<link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADDED VIEWPORT META TAG -->
+    <title>Admin Dashboard - Institutions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Make sure this path is correct -->
 </head>
 
 
 <body>
     <div class="wrapper">
         <h2>Admin Dashboard</h2>
-        <nav>
-        <ul>
+        <nav class="main-nav"> <!-- ADDED class="main-nav" to the nav element -->
+            <button class="hamburger-menu">  <!-- Hamburger button -->
+                <span></span><span></span><span></span>
+            </button>
+            <ul>
                 <li><a href="admin.php">Dashboard</a></li>
                 <li><a href="institutions.php" style="text-decoration: underline;text-underline-offset:0.2em;">Institutions</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="requests.php">Manage Requests</a></li>  
+                <li><a href="requests.php">Manage Requests</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -160,7 +163,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
             </div>
             <div class="form-group">
                 <input type="submit" class="btn button-40" value="Add Institution" name="add_institution">
-                <input type="reset" class="btn button-40 ml-2" value="Reset">
+                <input type="reset" class="btn button-40" value="Reset">
             </div>
         </form>
 
@@ -206,8 +209,19 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
         <hr>
 
 
-        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
+
+    <script> // ADDED JAVASCRIPT FOR HAMBURGER MENU
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('.main-nav'); // Use class 'main-nav'
+
+            hamburgerMenu.addEventListener('click', function() {
+                nav.classList.toggle('nav-active'); // Toggle the 'nav-active' class on the nav element
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 session_start();
 require_once '../database.php';
@@ -32,34 +32,29 @@ $recent_requests = $recent_requests_result ? $recent_requests_result->fetch_all(
 <head>
     <meta charset="UTF-8">
     <title>Institution Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <!-- <style>
-        body { font: 14px sans-serif; }
-        .wrapper { width: 800px; padding: 20px; margin: 0 auto; }
-        .dashboard-nav { margin-bottom: 20px; }
-        .dashboard-nav a { margin-right: 10px; }
-        .table-responsive { overflow-x: auto; }
-        .table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .table th { background-color: #f2f2f2; font-weight: bold; }
-        .table tbody tr:nth-child(even) { background-color: #f9f9f9; }
-    </style> -->
 </head>
 <body>
     <div class="wrapper">
         <h2>Institution Dashboard</h2>
+        <nav class="no-print">
+            <button class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul>
+                <li><a href="dashboard.php" class="active" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li>
+                <li><a href="inventory.php">View Inventory</a></li>
+                <li><a href="request_drug.php">Request Drugs</a></li>
+                <li><a href="requests.php">View Requests</a></li>
+                <li><a href="bill.php">Generate Bill</a></li>
+            </ul>
+        </nav>
         <p>Welcome, <strong><?php echo htmlspecialchars($username); ?></strong>!</p>
 
-        <nav>
-            <ul>
-            <a href="dashboard.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a>
-            <a href="inventory.php">View Inventory</a>
-            <a href="request_drug.php">Request Drugs</a>
-            <a href="requests.php">View Requests</a>
-            <a href="bill.php">Generate Bill</a>
-</ul>
-</nav>
+
 
         <h3>Recent Request Status</h3>
         <div class="table-responsive">
@@ -91,8 +86,21 @@ $recent_requests = $recent_requests_result ? $recent_requests_result->fetch_all(
             </table>
         </div>
 
-        <p><a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
+        <p class="no-print"><a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('nav');
+
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 

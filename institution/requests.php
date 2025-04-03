@@ -1,8 +1,7 @@
-
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 session_start();
 require_once '../database.php';
@@ -41,41 +40,37 @@ if ($requests_result) {
 <head>
     <meta charset="UTF-8">
     <title>View Requests</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <!-- <style>
-        body { font: 14px sans-serif; }
-        .wrapper { width: 90%; padding: 20px; margin: 0 auto; } /* Wider wrapper */
-        .dashboard-nav { margin-bottom: 20px; }
-        .dashboard-nav a { margin-right: 10px; }
-        .table-responsive { overflow-x: auto; }
-        .table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .table th { background-color: #f2f2f2; font-weight: bold; }
-        .table tbody tr:nth-child(even) { background-color: #f9f9f9; }
-    </style> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Added viewport meta tag -->
+    <link rel="stylesheet" href="style.css"> <!-- Linked to style.css -->
+    <!-- Bootstrap CSS link and inline styles removed -->
 </head>
 <body>
     <div class="wrapper">
         <h2>View Drug Requests</h2>
-        <p>Viewing Requests for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
-
-        <nav>
+        <nav class="no-print">
+            <button class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="inventory.php" >View Inventory</a>
-            <a href="request_drug.php">Request Drugs</a>
-            <a href="requests.php" style="text-decoration: underline;text-underline-offset:0.2em;">View Requests</a>
-            <a href="bill.php">Generate Bill</a>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="inventory.php" >View Inventory</a></li>
+            <li><a href="request_drug.php">Request Drugs</a></li>
+            <li><a href="requests.php" class="active" style="text-decoration: underline;text-underline-offset:0.2em;">View Requests</a></li> <!-- Added active class to View Requests link -->
+            <li><a href="bill.php">Generate Bill</a></li>
 </ul>
 </nav>
+        <p>Viewing Requests for: <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
+
+
 
         <?php if (!empty($requests_err)): ?>
-            <div class="alert alert-danger"><?php echo $requests_err; ?></div>
+            <div class="alert alert-danger"><?php echo $requests_err; ?></div> <!-- Kept alert and alert-danger classes -->
         <?php endif; ?>
 
-        <div class="table-responsive">
-            <table class="table">
+        <div class="table-responsive"> <!-- Added table-responsive class for table -->
+            <table class="table"> <!-- Added table class for styling -->
                 <thead>
                     <tr>
                         <th>Request ID</th>
@@ -105,9 +100,21 @@ if ($requests_result) {
             </table>
         </div>
 
-
-        <p><a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
+        <p class="no-print"><a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p> <!-- Kept btn and btn-danger classes -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('nav');
+
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php

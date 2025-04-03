@@ -257,7 +257,7 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
         <hr>
 
 
-        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
 </body>
 

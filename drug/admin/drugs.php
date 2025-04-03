@@ -1,9 +1,4 @@
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
-?>
-<?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 session_start();
@@ -122,30 +117,27 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
+<link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADDED VIEWPORT META TAG -->
-    <title>Admin Dashboard - Drugs</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Make sure this path is correct -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 
 <body>
     <div class="wrapper">
         <h2>Admin Dashboard</h2>
-        <nav class="main-nav"> <!-- ADDED class="main-nav" to the nav element -->
-            <button class="hamburger-menu">  <!-- Hamburger button -->
-                <span></span><span></span><span></span>
-            </button>
-            <ul>
+        <nav>
+        <ul>
                 <li><a href="admin.php">Dashboard</a></li>
                 <li><a href="institutions.php">Institutions</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="drugs.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Drugs</a></li>
-                <li><a href="requests.php">Manage Requests</a></li>
+                <li><a href="requests.php">Manage Requests</a></li>  
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -261,19 +253,8 @@ $drugs = $drugs_result->fetch_all(MYSQLI_ASSOC);
         <hr>
 
 
-        <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="../logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
-
-    <script> // ADDED JAVASCRIPT FOR HAMBURGER MENU
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const nav = document.querySelector('.main-nav'); // Use class 'main-nav'
-
-            hamburgerMenu.addEventListener('click', function() {
-                nav.classList.toggle('nav-active'); // Toggle the 'nav-active' class on the nav element
-            });
-        });
-    </script>
 </body>
 
 </html>

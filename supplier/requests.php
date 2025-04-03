@@ -1,16 +1,11 @@
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
-?>
-<?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 session_start();
 require_once '../database.php';
 
-// Check if the user is logged in and is an admin
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'Admin') {
+// Check if the user is logged in and is Supplier
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION['role'] !== 'Supplier') {
     header("location: ../login.php");
     exit;
 }
@@ -19,13 +14,14 @@ $requests_err = "";
 $requests = [];
 $update_message = ""; // Success/error message for updates
 
-// --- Handle Approve/Reject Actions ---
+// --- Handle Approve/Reject/Delivered Actions ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
-    $action = $_POST['action']; // 'Approve' or 'Reject'
-    $supplier_notes = isset($_POST['supplier_notes']) ? trim($_POST['supplier_notes']) : '';
-    // Validate action (optional, but good practice)
-    if (!in_array($action, ['Approved', 'Rejected'])) {
+    $action = $_POST['action']; // 'Approved', 'Rejected', or 'Delivered'
+    $supplier_notes = trim($_POST['supplier_notes']);
+
+    // Validate action
+    if (!in_array($action, ['Approved', 'Rejected', 'Delivered'])) {
         $update_message = "<div class='alert alert-danger'>Invalid action.</div>";
     } else {
         // Prepare an update statement
@@ -52,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_request'])) {
                     }
                 }
 
-
             } else {
                 $update_message = "<div class='alert alert-danger'>Error updating request: " . $stmt->error . "</div>";
             }
@@ -63,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_request'])) {
     }
 }
 
+// (updateInventory function - same as in admin/requests.php - copy it here)
 function updateInventory($conn, $drugId, $institutionId, $quantity) {
     // Check if an inventory record already exists
     $checkSql = "SELECT * FROM institution_inventory WHERE drug_id = ? AND institution_id = ?";
@@ -92,13 +88,13 @@ function updateInventory($conn, $drugId, $institutionId, $quantity) {
 }
 
 
-// Fetch Pending Requests for Display
+// Fetch Requests for Display - For Supplier, show only 'Approved' and 'Delivered'
 $requests_sql = "SELECT r.id, r.quantity, r.request_date, r.status, r.supplier_notes, d.name AS drug_name, i.name AS institution_name
                   FROM requests r
                   JOIN drugs d ON r.drug_id = d.id
                   JOIN institutions i ON r.institution_id = i.id
-                  WHERE r.status = 'Pending'
-                  ORDER BY r.request_date ASC"; //Order by request date, oldest first
+                  WHERE r.status IN ('Approved', 'Delivered')  -- Show only Approved and Delivered requests to Supplier
+                  ORDER BY r.request_date DESC"; // Show latest requests first
 $requests_result = executeQuery($conn, $requests_sql);
 if ($requests_result) {
     $requests = $requests_result->fetch_all(MYSQLI_ASSOC);
@@ -113,30 +109,26 @@ if ($requests_result) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADDED VIEWPORT META TAG -->
-    <title>Process Requests</title>
+    <title>Supplier Request Management</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="../style.css"> <!-- Correct CSS path -->
+    <style>
+        /* Add specific styling for supplier requests page if needed */
+    </style>
 </head>
 <body>
     <div class="wrapper">
-        <h2>Process Drug Requests</h2>
-        <nav class="main-nav"> <!-- ADDED class="main-nav" to the nav element -->
-            <button class="hamburger-menu">  <!-- Hamburger button -->
-                <span></span><span></span><span></span>
-            </button>
+        <h2>Manage Drug Requests</h2>
+        <p>Approve or Reject Drug Requests from Institutions and mark them as Delivered.</p>
+
+        <nav>
             <ul>
-                <li><a href="admin.php">Dashboard</a></li>
-                <li><a href="institutions.php">Institutions</a></li>
-                <li><a href="users.php">Users</a></li>
-                <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="requests.php"   style="text-decoration: underline;text-underline-offset:0.2em;">Manage Requests</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="requests.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Manage Requests</a></li>
+                <li><a href="../admin/logout.php">Logout</a></li>
             </ul>
         </nav>
-        <p>Manage and process pending drug requests.</p>
-
-        
+        <hr/>
 
         <?php echo $update_message; ?> <?php //Display update message ?>
 
@@ -144,7 +136,8 @@ if ($requests_result) {
             <div class="alert alert-danger"><?php echo $requests_err; ?></div>
         <?php endif; ?>
 
-        <div class="table-responsive">
+        <div class="table-responsive dashboard-content">
+            <h3>Approved Drug Requests</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -159,7 +152,7 @@ if ($requests_result) {
                 </thead>
                 <tbody>
                     <?php if (empty($requests)): ?>
-                        <tr><td colspan="7">No pending requests.</td></tr>
+                        <tr><td colspan="7">No approved requests.</td></tr>
                     <?php else: ?>
                         <?php foreach ($requests as $request): ?>
                             <tr>
@@ -170,40 +163,15 @@ if ($requests_result) {
                                 <td><?php echo htmlspecialchars($request['request_date']); ?></td>
                                 <td><?php echo htmlspecialchars($request['status']); ?></td>
                                 <td class="action-buttons">
-                                    <form method="post" style="display:inline-block;">
-                                        <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
-                                        <input type="hidden" name="action" value="Approved">
-                                        <button type="submit" name="update_request" class="btn btn-success btn-sm">Approve</button>
-                                    </form>
-                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rejectModal<?php echo $request['id']; ?>">Reject</button>
-
-                                    <!-- Rejection Modal -->
-                                    <div class="modal fade" id="rejectModal<?php echo $request['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel<?php echo $request['id']; ?>" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="rejectModalLabel<?php echo $request['id']; ?>">Reject Request <?php echo $request['id']; ?></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="">
-                                                        <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
-                                                        <input type="hidden" name="action" value="Rejected">
-                                                        <div class="form-group">
-                                                            <label for="supplier_notes">Reason for Rejection (Optional):</label>
-                                                            <textarea class="form-control" id="supplier_notes" name="supplier_notes" rows="3"></textarea>
-                                                        </div>
-                                                        <button type="submit" name="update_request" class="btn btn-danger">Reject Request</button>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
+                                    <?php if ($request['status'] === 'Approved'): ?>
+                                        <form method="post" style="display:inline-block;">
+                                            <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
+                                            <input type="hidden" name="action" value="Delivered">
+                                            <button type="submit" name="update_request" class="button-40 btn btn-primary btn-sm">Mark as Delivered</button>
+                                        </form>
+                                    <?php elseif ($request['status'] === 'Delivered'): ?>
+                                        <span class="text-success">Delivered</span> <?php // Display text if already delivered ?>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -213,22 +181,12 @@ if ($requests_result) {
         </div>
 
 
-        <p><a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
+        <p><a href="../admin/logout.php" class="button-40 btn ml-3">Sign Out of Your Account</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script> // ADDED JAVASCRIPT FOR HAMBURGER MENU
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const nav = document.querySelector('.main-nav'); // Use class 'main-nav'
-
-            hamburgerMenu.addEventListener('click', function() {
-                nav.classList.toggle('nav-active'); // Toggle the 'nav-active' class on the nav element
-            });
-        });
-    </script>
 </body>
 </html>
 <?php
