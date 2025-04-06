@@ -38,12 +38,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
                 <span></span><span></span><span></span>
             </button>
             <ul>
-                <li><a href="admin.php" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li><!-- Link to admin.php - which is this page itself -->
-                <li><a href="institutions.php">Institutions</a></li>
-                <li><a href="users.php">Users</a></li>
-                <li><a href="drugs.php">Drugs</a></li>
-                <li><a href="requests.php">Manage Requests</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="admin.php" class="<?php if ($currentPage == 'dashboard.php') echo 'active'; ?>" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li><!-- Link to admin.php - which is this page itself -->
+                <li><a href="institutions.php" class="<?php if ($currentPage == 'institutions.php') echo 'active'; ?>">Institutions</a></li>
+                <li><a href="users.php" class="<?php if ($currentPage == 'users.php') echo 'active'; ?>">Users</a></li>
+                <li><a href="drugs.php" class="<?php if ($currentPage == 'drugs.php') echo 'active'; ?>">Drugs</a></li>
+                <li><a href="requests.php" class="<?php if ($currentPage == 'requests.php') echo 'active'; ?>">Manage Requests</a></li>
+                <li><a href="logout.php" class="<?php if ($currentPage == 'logout.php') echo 'active'; ?>">Logout</a></li>
             </ul>
         </nav>
         <hr/>

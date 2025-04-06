@@ -1,102 +1,101 @@
-<?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drug Inventory Home</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>Drug Inventory Management System - Home</title>
+    <link rel="stylesheet" href="home_style.css"> <!-- Link to your existing style.css file -->
 </head>
 <body>
-    <div class="container">
-        <!-- Hero Section -->
+    <div class="wrapper">
         <header>
-            <div class="hero-content">
-                <h1 class="animate-fade-in funnel-sans-font">
-                    Drug Inventory <span class="gradient-text">Search</span>
-                </h1>
-                
-                <!-- Auth Buttons -->
-                <div id="authButtons">
-                    <button onclick="window.location.href='login.php'" class="button-40">Login</button>
-                    <button onclick="window.location.href='signup.php'"class="button-40">Sign Up</button>
-                </div>
-
-                <!-- Search Section -->
-                <form id="searchForm" method="get" action="" class="search-container">
-                    <input type="text" id="searchInput" name="q" placeholder="Search for drugs...">
-                    <button type="submit" class="button-40">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        Search
-                    </button>
-                </form>
-
-                <!-- Results Table -->
-                <div id="searchResults" class="funnel-sans-font">
-                    <!-- Search results will be dynamically inserted here -->
-                </div>
+            <nav>
+                <button class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="index.php" class="active">Home</a></li>
+                    <li><a href="drug_search.php">Search for drugs</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </nav>
+            <div class="header-content">
+                <h1>Streamline Your Drug Inventory</h1>
+                <p>Efficiently manage your drug inventory, reduce errors, and ensure optimal stock levels with our comprehensive system.</p>
+                <a href="./login.php" class="button-40">Get Started</a> <a href="features.php" class="button-40 secondary-button">Learn More</a>
             </div>
         </header>
 
-        <!-- Footer -->
-        <footer>
-            <div class="footer-content">
-                <p>© 2024 Drug Inventory System. All rights reserved.</p>
+        <main class="dashboard-content"> <!-- Using dashboard-content class for main content styling -->
+            <section class="hero-section">
+                <div class="hero-image">
+                    <img src="med.jpg" alt="Pharmacy Inventory Management" loading="lazy"> <!-- Replace with your image -->
+                </div>
+                <div class="hero-text">
+                    <h2>Take Control of Your Pharmacy Stock</h2>
+                    <p>Our intuitive drug inventory management system is designed to simplify your workflow, improve accuracy, and save valuable time. From tracking stock levels to generating reports, we provide the tools you need to optimize your inventory process.</p>
+                    <ul>
+                        <li>Real-time Inventory Tracking</li>
+                        <li>Automated Stock Alerts</li>
+                        <li>Comprehensive Reporting & Analytics</li>
+                        <li>User-Friendly Interface</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-cubes"></i> <!-- Example Icon - Font Awesome (you'd need to include Font Awesome if using) -->
+                        <h3>Inventory Tracking</h3>
+                        <p>Monitor stock levels in real-time, ensuring you always know what's on hand and preventing stockouts.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bell"></i> <!-- Example Icon -->
+                        <h3>Automated Alerts</h3>
+                        <p>Set up low-stock alerts to automatically notify you when it's time to reorder, minimizing disruptions.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-bar"></i> <!-- Example Icon -->
+                        <h3>Reporting & Analytics</h3>
+                        <p>Generate detailed reports on inventory trends, drug usage, and more to make informed decisions.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-user-friends"></i> <!-- Example Icon -->
+                        <h3>Multi-User Access</h3>
+                        <p>Securely manage user roles and permissions, allowing your team to collaborate effectively within the system.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="call-to-action-section">
+                <h2>Ready to Get Started?</h2>
+                <p>Join thousands of pharmacies and institutions already benefiting from our efficient drug inventory management system.</p>
+                <a href="./signup.php" class="button-40 large-button">Sign Up for Free</a>
+            </section>
+        </main>
+
+        <footer class="footer-content">
+            <p>© <?php echo date("Y"); ?> Drug Inventory Management System. All rights reserved.</p>
+            <div>
+                <a href="terms.php">Terms of Service</a> | <a href="privacy.php">Privacy Policy</a> | <a href="contact.php">Contact Us</a>
             </div>
         </footer>
     </div>
 
     <script>
-        // JavaScript for handling search (AJAX)
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('searchForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent traditional form submission
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('nav');
 
-                const searchTerm = document.getElementById('searchInput').value;
-
-                // Make an AJAX request to search.php
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'search.php?q=' + encodeURIComponent(searchTerm), true);
-                xhr.onload = function() {
-                    if (xhr.status >= 200 && xhr.status < 400) {
-                        document.getElementById('searchResults').innerHTML = xhr.responseText;
-                    } else {
-                        console.error('Error: ' + xhr.status);
-                        document.getElementById('searchResults').innerHTML = '<p>An error occurred.</p>';
-                    }
-                };
-                xhr.onerror = function() {
-                    console.error('Network error');
-                    document.getElementById('searchResults').innerHTML = '<p>A network error occurred.</p>';
-                };
-                xhr.send();
-            });
-
-            // Add hover effect to feature cards if they exist
-            const featureCards = document.querySelectorAll('.feature-card');
-            featureCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-5px)';
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
                 });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
+            }
         });
     </script>
 </body>

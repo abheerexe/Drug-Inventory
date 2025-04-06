@@ -1,0 +1,642 @@
+/* Homepage specific styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #b4bdc7;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base wrapper styles with improved responsiveness */
+.wrapper {
+    width: 95%;
+    max-width: 1200px;
+    padding: 15px;
+    margin: 15px auto;
+    background-color: #111827;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(247, 241, 241, 0.1);
+}
+
+/* Responsive typography */
+h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #f0f1f3;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    color: #f0f1f3;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+hr {
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Responsive Navigation with Hamburger Menu */
+nav {
+    position: relative; /* Needed for absolute positioning of hamburger */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center; /* Center nav links on larger screens */
+}
+
+nav li {
+    margin-bottom: 0;
+}
+
+nav a {
+    display: block;
+    padding: 10px 15px;
+    color: #b4bdc7;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+}
+
+nav a.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Hamburger Menu Icon Styles */
+.hamburger-menu {
+    position: absolute; /* Positioned relative to the nav */
+    top: -30px;
+    right: 15px;
+    display: none; /* Hidden by default on larger screens */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.hamburger-menu:focus {
+    outline: none; /* Remove default focus outline */
+}
+
+.hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #f0f1f3; /* Hamburger bar color */
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Rotate hamburger to 'X' when navigation is active (example - you'll need JS to toggle .nav-active) */
+nav.nav-active .hamburger-menu span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+
+nav.nav-active .hamburger-menu span:nth-child(2) {
+    opacity: 0;
+}
+
+nav.nav-active .hamburger-menu span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+
+/* Responsive Dashboard Content */
+.dashboard-content {
+    margin-top: 30px;
+    line-height: 1.6;
+}
+
+.dashboard-content ul {
+    list-style-type: square;
+    padding-left: 25px;
+}
+
+/* Responsive Buttons */
+.btn-danger,
+.btn-primary,
+.btn-secondary {
+    border: none;
+    padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-danger {
+    background-color: #ff1601;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #910202;
+}
+
+.btn:hover {
+    color: #FFFFFF;
+}
+
+/* Responsive Pagination */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.pagination a {
+    color: #495057;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #e9ecef;
+    border-color: #bbb;
+}
+
+/* Responsive Table */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.table th,
+.table td {
+    border: none;
+    padding: clamp(8px, 2vw, 12px);
+    text-align: left;
+    color: #f0f1f3;
+    min-width: 100px;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    color: #555;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #111827;
+}
+
+/* Responsive Forms */
+.form-control {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: clamp(8px, 2vw, 10px);
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: 0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f0f1f3;
+    font-weight: 500;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+/* Custom Button */
+.button-40 {
+    background-color: #2a55b1;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.2rem);
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: auto;
+}
+
+.button-40:hover {
+    background-color: #192f53;
+}
+
+.button-40:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Footer Content */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.footer-content p {
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Font */
+.funnel-sans-font {
+    font-family: "Funnel Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .wrapper {
+        width: 90%;
+        padding: 10px;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .wrapper {
+        width: 95%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    /* Hamburger Menu Display and Navigation Adjustments for Tablets and Phones */
+    nav ul {
+        flex-direction: column;
+        gap: 0; /* Remove gap between nav items in vertical layout */
+        position: absolute; /* Position nav menu to overlay content */
+        top: 100%; /* Position just below the nav bar */
+        left: 0;
+        right: 0;
+        background-color: #111827; /* Match wrapper background */
+        border-top: 1px solid #2d3748; /* Separator line */
+        z-index: 5; /* Ensure it's below hamburger but above content */
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* Initially hidden (clip-path for smooth animation - can also use height: 0; overflow: hidden;) */
+        transition: clip-path 0.3s ease; /* Animate clip-path */
+    }
+
+    nav.nav-active ul {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Show menu when nav-active class is present */
+    }
+
+    nav li {
+        border-bottom: 1px solid #2d3748; /* Separator between nav links */
+    }
+
+    nav li:last-child {
+        border-bottom: none; /* Remove border from last item */
+    }
+
+    nav a {
+        text-align: left; /* Left align text in vertical nav */
+        padding: 15px 20px; /* Add more padding for touch targets */
+    }
+
+    .hamburger-menu {
+        display: flex; /* Show hamburger menu on smaller screens */
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    #searchResults table {
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .pagination {
+        gap: 3px;
+    }
+
+    .pagination a {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Suggested font size reduction for very narrow screens */
+    body {
+        font-size: 14px; /* You can try 13px or 12px if 14px feels too large on very narrow screens */
+    }
+
+    .wrapper {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        padding: 10px 8px; /* Slightly reduced horizontal padding in wrapper */
+    }
+
+    /* Suggested vertical spacing reduction for very narrow screens */
+    .dashboard-content,
+    .form-group,
+    .footer-content {
+        margin-top: 15px; /* Reduced vertical margin */
+        margin-bottom: 10px; /* Reduced vertical margin */
+    }
+
+    /* Stack buttons in forms vertically on very small screens */
+    .form-group input[type="submit"],
+    .form-group input[type="reset"] {
+        display: block; /* Stack buttons vertically */
+        width: 100%;     /* Make them full-width */
+        margin-bottom: 10px; /* Add vertical spacing */
+    }
+    .form-group input[type="reset"].btn.button-40.ml-2 { /* Remove left margin if you used ml-2 on reset button */
+        margin-left: 0;
+    }
+
+
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+
+    .button-40 {
+        width: 100%;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .wrapper {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .btn,
+    nav,
+    .pagination {
+        display: none;
+    }
+}
+
+header {
+    padding-bottom: 20px; /* Add some padding below the header */
+    text-align: center; /* Center align header content */
+}
+
+.header-content {
+    margin-top: 2rem;
+}
+
+.header-content h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Larger, responsive headline */
+    color: #f0f1f3;
+    margin-bottom: 1rem;
+}
+
+.header-content p {
+    font-size: 1.2rem;
+    color: #b4bdc7;
+    max-width: 700px; /* Limit width for better readability */
+    margin: 0 auto 1.5rem auto; /* Center text and add bottom margin */
+}
+
+.header-content .button-40 {
+    margin: 0 10px; /* Spacing between buttons in header */
+}
+
+.header-content .secondary-button {
+    background-color: #6c757d; /* Example secondary button color */
+}
+
+.header-content .secondary-button:hover {
+    background-color: #545b62;
+}
+
+
+.hero-section {
+    display: flex;
+    flex-direction: column; /* Stack on smaller screens */
+    align-items: center;
+    padding: 30px 0;
+    gap: 2rem; /* Spacing between image and text */
+}
+
+@media (min-width: 768px) { /* Adjust breakpoint as needed */
+    .hero-section {
+        flex-direction: row; /* Row layout on larger screens */
+        justify-content: space-around;
+        text-align: left;
+    }
+    .hero-image, .hero-text {
+        flex: 1; /* Distribute space equally */
+    }
+}
+
+
+.hero-image {
+    max-width: 400px; /* Adjust as needed */
+    margin-bottom: 1rem; /* Spacing below image on smaller screens */
+}
+
+.hero-image img {
+    display: block; /* Remove default inline spacing */
+    width: 100%;
+    height: auto;
+    border-radius: 5px; /* Optional: Rounded corners for image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Image shadow */
+}
+
+.hero-text h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+}
+
+.hero-text ul {
+    list-style-type: disc;
+    padding-left: 25px;
+}
+
+.features-section {
+    padding: 40px 0;
+    background-color: #1a202c; /* Slightly darker background for features section */
+    text-align: center;
+}
+
+.features-section h2 {
+    margin-bottom: 2rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+    max-width: 1200px; /* Match wrapper max-width */
+    margin: 0 auto;
+    padding: 0 20px; /* Add horizontal padding */
+}
+
+.feature {
+    padding: 25px;
+    background-color: #111827; /* Match wrapper background */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+.feature i {
+    font-size: 2.5rem; /* Icon size - adjust if using Font Awesome or similar */
+    color: #007bff; /* Example icon color */
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature h3 {
+    margin-bottom: 0.8rem;
+}
+
+.feature p {
+    color: #9ca3af; /* Lighter text for feature descriptions */
+}
+
+.call-to-action-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.call-to-action-section h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+}
+
+.call-to-action-section p {
+    font-size: 1.2rem;
+    color: #b4bdc7;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+}
+
+.call-to-action-section .large-button {
+    padding: 1rem 2rem; /* Larger button padding */
+    font-size: 1.2rem;
+}

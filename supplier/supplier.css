@@ -1,0 +1,420 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #b4bdc7;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base wrapper styles with improved responsiveness */
+.wrapper {
+    width: 95%;
+    max-width: 1200px;
+    /* Responsive padding and margin for wrapper */
+    padding: clamp(10px, 2vw, 15px); /* Adjust min/max padding values as needed */
+    margin: clamp(10px, 2vw, 15px) auto; /* Adjust min/max margin values as needed */
+    background-color: #111827;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(247, 241, 241, 0.1);
+}
+
+/* Responsive typography - Already Responsive using clamp() - No changes needed */
+h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #f0f1f3;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    color: #f0f1f3;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+hr {
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Responsive Navigation - Stacked Vertically on Smaller Screens - Hamburger Menu Removed - Already Responsive */
+nav {
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav li {
+    margin-bottom: 0;
+}
+
+nav a {
+    display: block;
+    padding: 10px 15px;
+    color: #b4bdc7;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+}
+
+nav a.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Responsive Dashboard Content */
+.dashboard-content {
+    /* Responsive margin-top for dashboard content */
+    margin-top: clamp(20px, 4vw, 30px); /* Adjust min/max margin-top values as needed */
+    line-height: 1.6;
+}
+
+.dashboard-content ul {
+    list-style-type: square;
+    padding-left: 25px;
+}
+
+/* Responsive Buttons - Already Responsive using clamp() - No changes needed */
+.btn-danger,
+.btn-primary,
+.btn-secondary,
+.button-40 {
+    border: none;
+    padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-danger {
+    background-color: #ff1601;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #910202;
+}
+
+.btn:hover {
+    color: #FFFFFF;
+}
+
+/* Responsive Pagination */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.pagination a {
+    color: #495057;
+    /* Responsive padding for pagination links */
+    padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 16px); /* Adjust min/max padding values as needed */
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: clamp(14px, 2vw, 16px); /* Make pagination font size also responsive for consistency */
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #e9ecef;
+    border-color: #bbb;
+}
+
+/* Responsive Table - Already Responsive */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.table th,
+.table td {
+    border: none;
+    padding: clamp(8px, 2vw, 12px);
+    text-align: left;
+    color: #f0f1f3;
+    min-width: 100px;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    color: #555;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #111827;
+}
+
+/* Responsive Forms - Already Responsive */
+.form-control {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: clamp(8px, 2vw, 10px);
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: 0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f0f1f3;
+    font-weight: 500;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+/* Custom Button - Already Responsive using clamp() - No changes needed */
+.button-40 {
+    background-color: #2a55b1;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.2rem);
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: auto;
+}
+
+.button-40:hover {
+    background-color: #192f53;
+}
+
+.button-40:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Footer Content - Already Responsive */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.footer-content p {
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* Animations - Not related to responsiveness */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Font - Not related to responsiveness */
+.funnel-sans-font {
+    font-family: "Funnel Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Media Queries - Already Responsive */
+@media (max-width: 1024px) {
+    .wrapper {
+        width: 90%;
+        padding: 10px;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .wrapper {
+        width: 95%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    /* Navigation Adjustments for Tablets and Phones - Stacked Vertically - Hamburger Removed */
+    nav ul {
+        flex-direction: column;
+        gap: 0;
+        position: static;
+        background-color: transparent;
+        border-top: none;
+        clip-path: none;
+        transition: none;
+        text-align: center;
+    }
+
+
+    nav li {
+        border-bottom: 1px solid #2d3748;
+    }
+
+    nav li:last-child {
+        border-bottom: none;
+    }
+
+    nav a {
+        text-align: center;
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .wrapper {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        padding: 10px 8px;
+    }
+
+    .dashboard-content,
+    .form-group,
+    .footer-content {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    .form-group input[type="submit"],
+    .form-group input[type="reset"] {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .form-group input[type="reset"].btn.button-40.ml-2 {
+        margin-left: 0;
+    }
+
+
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+
+    .button-40 {
+        width: 100%;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+}
+
+/* Print styles - Already Responsive (hides unnecessary elements) */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .wrapper {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .btn,
+    nav,
+    .pagination {
+        display: none;
+    }
+}

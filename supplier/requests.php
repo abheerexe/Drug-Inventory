@@ -14,6 +14,8 @@ $requests_err = "";
 $requests = [];
 $update_message = ""; // Success/error message for updates
 
+$currentPage = basename($_SERVER['PHP_SELF']);
+
 // --- Handle Approve/Reject/Delivered Actions ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
@@ -110,8 +112,9 @@ if ($requests_result) {
 <head>
     <meta charset="UTF-8">
     <title>Supplier Request Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-     <link rel="stylesheet" href="../style.css"> <!-- Correct CSS path -->
+    <link rel="stylesheet" href="supplier.css">
     <style>
         /* Add specific styling for supplier requests page if needed */
     </style>
@@ -122,12 +125,12 @@ if ($requests_result) {
         <p>Approve or Reject Drug Requests from Institutions and mark them as Delivered.</p>
 
         <nav>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="requests.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Manage Requests</a></li>
+      <ul>
+      <li><a href="dashboard.php" class="<?php if ($currentPage == 'dashboard.php') echo 'active'; ?>">Dashboard</a></li>
+                <li><a href="requests.php" class="<?php if ($currentPage == 'requests.php') echo 'active'; ?>" style="text-decoration: underline;text-underline-offset:0.2em;">Manage Requests</a></li>
                 <li><a href="../admin/logout.php">Logout</a></li>
-            </ul>
-        </nav>
+      </ul>
+  </nav>
         <hr/>
 
         <?php echo $update_message; ?> <?php //Display update message ?>
@@ -181,12 +184,24 @@ if ($requests_result) {
         </div>
 
 
-        <p><a href="../admin/logout.php" class="button-40 btn ml-3">Sign Out of Your Account</a></p>
+        <p><a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu'); // Ensure hamburger menu is still not needed, if yes then uncomment this and related script
+            const nav = document.querySelector('nav');
+
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php

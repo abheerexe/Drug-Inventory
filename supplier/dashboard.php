@@ -10,6 +10,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
 
 $username = $_SESSION['username'];
 
+// Determine the current page filename to dynamically set the 'active' class
+$currentPage = basename($_SERVER['PHP_SELF']); // Gets the filename of the current script
+
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +20,12 @@ $username = $_SESSION['username'];
 <head>
     <meta charset="UTF-8">
     <title>Supplier Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../style.css"> <!-- Link to your main style.css -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="supplier.css"> <!-- Use your supplier-specific stylesheet -->
+    <!-- Removed Bootstrap CSS link - assuming your style.css handles all styling -->
     <style>
-        /* Add any specific styling for supplier dashboard here */
+        /* Inline styles are generally discouraged, move these to your CSS file if needed */
+        /* Consider removing this <style> block and managing all styles in CSS files */
     </style>
 </head>
 <body>
@@ -30,8 +35,8 @@ $username = $_SESSION['username'];
 
         <nav>
             <ul>
-                <li><a href="dashboard.php"  style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li>
-                <li><a href="requests.php">Manage Requests</a></li>
+                <li><a href="dashboard.php" class="<?php if ($currentPage == 'dashboard.php') echo 'active'; ?>" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li>
+                <li><a href="requests.php" class="<?php if ($currentPage == 'requests.php') echo 'active'; ?>">Manage Requests</a></li>
                 <li><a href="../admin/logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -48,8 +53,21 @@ $username = $_SESSION['username'];
 
         <hr>
 
-        <a href="../admin/logout.php" class="button-40 btn ml-3">Sign Out of Your Account</a>
+        <a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu'); // Ensure hamburger menu is still not needed, if yes then uncomment this and related script
+            const nav = document.querySelector('nav');
+
+            if (hamburgerMenu && nav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    nav.classList.toggle('nav-active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php

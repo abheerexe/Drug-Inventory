@@ -20,6 +20,7 @@ body {
     overflow-x: hidden;
 }
 
+
 /* Hero Section */
 header {
     padding: 3rem 1rem;
@@ -111,6 +112,206 @@ header {
     #authButtons {
         gap: 1rem;
     }
+}
+/* Add this CSS code to your stylesheet (style.css or a specific stylesheet) */
+
+.btn-new {
+    /* Basic Button Styling - Inherits some general button styles if you have them */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Indicate it's clickable */
+    text-align: center; /* Center text inside the button */
+    text-decoration: none; /* Remove default link underlines */
+    display: inline-block; /* Behave like inline but allow setting width/height/padding */
+    border-radius: 5px; /* Rounded corners - adjust as needed */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    white-space: nowrap; /* Prevent text wrapping */
+
+    /* Responsive Padding and Font Size using clamp() */
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem); /* Adjust min/max values as needed */
+    font-size: clamp(0.9rem, 2vw, 1rem); /* Adjust min/max font size as needed */
+}
+
+/* Default Button Appearance */
+.btn-new {
+    background-color: #4CAF50; /* Example: Green default background */
+    color: white; /* White text color */
+}
+
+/* Hover State */
+.btn-new:hover {
+    background-color: #45a049; /* Darker green on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: subtle shadow on hover */
+}
+
+/* Focus State (for accessibility) */
+.btn-new:focus {
+    outline: 2px solid #007bff; /* Example: Blue outline on focus */
+    outline-offset: 2px; /* Offset outline slightly from the button */
+    box-shadow: none; /* Remove hover shadow on focus if desired */
+}
+
+/* Active State (when button is pressed) */
+.btn-new:active {
+    background-color: #3d8e40; /* Even darker green when active/pressed */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inset shadow for pressed effect */
+    transform: translateY(1px); /* Slight downward push effect */
+}
+
+/* Modifier Classes for Different Button Styles (Optional but Recommended) */
+
+/* Primary Button Style (e.g., blue) */
+.btn-new.btn-primary-new {
+    background-color: #007bff; /* Use your primary color */
+    color: white;
+}
+
+.btn-new.btn-primary-new:hover {
+    background-color: #0056b3; /* Darker shade of primary color */
+}
+
+.btn-new.btn-primary-new:focus {
+    outline-color: #007bff; /* Match focus outline to primary color */
+}
+
+.btn-new.btn-primary-new:active {
+    background-color: #00448f; /* Even darker shade for active state */
+}
+
+
+/* Secondary Button Style (e.g., gray) */
+.btn-new.btn-secondary-new {
+    background-color: #6c757d; /* Use your secondary color */
+    color: white;
+}
+
+.btn-new.btn-secondary-new:hover {
+    background-color: #545b62; /* Darker shade of secondary color */
+}
+
+.btn-new.btn-secondary-new:focus {
+    outline-color: #6c757d; /* Match focus outline to secondary color */
+}
+
+.btn-new.btn-secondary-new:active {
+    background-color: #4a4f54; /* Even darker shade for active state */
+}
+
+
+/* Danger Button Style (e.g., red) */
+.btn-new.btn-danger-new {
+    background-color: #dc3545; /* Use your danger color */
+    color: white;
+}
+
+.btn-new.btn-danger-new:hover {
+    background-color: #c82333; /* Darker shade of danger color */
+}
+
+.btn-new.btn-danger-new:focus {
+    outline-color: #dc3545; /* Match focus outline to danger color */
+}
+
+.btn-new.btn-danger-new:active {
+    background-color: #b01a28; /* Even darker shade for active state */
+}
+
+
+/* Large Button Modifier (Optional - if you need larger buttons) */
+.btn-new.btn-large-new {
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(2rem, 4vw, 2.5rem); /* Larger padding */
+    font-size: clamp(1rem, 2.5vw, 1.2rem); /* Larger font size */
+}
+
+
+/* Small Button Modifier (Optional - if you need smaller buttons) */
+.btn-new.btn-small-new {
+    padding: clamp(0.4rem, 1vw, 0.6rem) clamp(1rem, 2vw, 1.5rem); /* Smaller padding */
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Smaller font size */
+}
+/* Add this CSS code to your stylesheet (style.css or supplier-dashboard-style.css, etc.) */
+
+/* Existing .btn-new styles (keep these - these are your base button styles) */
+.btn-new {
+    /* ... (all your existing .btn-new styles from the previous response) ... */
+    /* Make sure you have all the properties from the previous .btn-new code block */
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-new:hover {
+    /* ... (existing hover styles) ... */
+    background-color: #45a049;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-new:focus {
+    /* ... (existing focus styles) ... */
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.btn-new:active {
+    /* ... (existing active styles) ... */
+    background-color: #3d8e40;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+}
+
+.btn-new.btn-primary-new {
+    /* ... (existing .btn-primary-new styles) ... */
+}
+
+.btn-new.btn-primary-new:hover {
+    /* ... (existing .btn-primary-new:hover styles) ... */
+}
+
+/* ... (and so on for other modifier classes: .btn-secondary-new, .btn-danger-new, .btn-large-new, .btn-small-new) ... */
+
+
+/* --------------------------------------------------------------------- */
+/* NEW CSS for Top-Left Corner Button Positioning */
+/* --------------------------------------------------------------------- */
+
+.btn-top-left {
+    position: fixed; /* Fixed position relative to the viewport */
+    top: 10px;      /* Distance from the top of the viewport */
+    left: 10px;     /* Distance from the left edge of the viewport */
+    z-index: 1000;   /* Ensure it's on top of other content (adjust if needed) */
+    /* Optional: Add some margin or padding around the button if needed */
+    /* margin: 10px;  You can also use padding instead of or in addition to margin */
+}
+
+
+/* If you want to style the top-left button differently visually, you can add more styles here */
+/* For example, to make the top-left button a different color or size */
+.btn-top-left {
+    /* You can add overrides here, e.g.,
+    background-color: #f0ad4e;  Different background color for top-left button
+    color: black;
+    */
+}
+
+.btn-top-left:hover {
+    /* You can add hover styles specific to the top-left button if needed */
+}
+
+.btn-top-left:focus {
+    /* You can add focus styles specific to the top-left button if needed */
+}
+
+.btn-top-left:active {
+    /* You can add active styles specific to the top-left button if needed */
 }
 
 #authButtons button {
