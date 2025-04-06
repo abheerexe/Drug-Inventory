@@ -1,7 +1,7 @@
 <?php
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 ?>
 <?php
 error_reporting(E_ALL);
@@ -29,19 +29,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_institution'])) {
     $institution_email = trim($_POST["email"]);
     $institution_type = $_POST["type"];
 
-    // Validate name
+    // Validate name (Mandatory)
     if (empty($institution_name)) {
         $institution_name_err = "Please enter a name.";
     }
 
-    // Validate email (if provided)
-    if (!empty($institution_email) && !filter_var($institution_email, FILTER_VALIDATE_EMAIL)) {
+    // Validate address (Mandatory)
+    if (empty($institution_address)) {
+        $institution_address_err = "Please enter an address.";
+    }
+
+    // Validate contact person (Mandatory and Alphabetical Only)
+    if (empty($institution_contact_person)) {
+        $institution_contact_person_err = "Please enter a contact person's name.";
+    } elseif (!ctype_alpha(str_replace(' ', '', $institution_contact_person))) {
+        $institution_contact_person_err = "Contact person name must contain only alphabetic characters and spaces.";
+    }
+
+    // Validate phone (Mandatory and 10-digit numeric)
+    if (empty($institution_phone)) {
+        $institution_phone_err = "Please enter a phone number.";
+    } elseif (!ctype_digit($institution_phone)) {
+        $institution_phone_err = "Phone number must contain only digits.";
+    } elseif (strlen($institution_phone) != 10) {
+        $institution_phone_err = "Phone number must be exactly 10 digits.";
+    }
+
+    // Validate email (Mandatory and valid format)
+    if (empty($institution_email)) {
+        $institution_email_err = "Please enter an email address.";
+    } elseif (!filter_var($institution_email, FILTER_VALIDATE_EMAIL)) {
         $institution_email_err = "Invalid email format.";
     }
 
-    // Validate type
-    if (empty($institution_type)) {
+    // Validate type (Mandatory)
+    if (empty($_POST["type"])) {
         $institution_type_err = "Please select a type.";
+    } else {
+        $institution_type = $_POST["type"];
     }
 
     // Check input errors before inserting in database
@@ -76,15 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_institution'])) {
     }
 }
 
-
 // Fetch Institutions for Display
 $institutions_sql = "SELECT id, name, address, contact_person, phone, email, type FROM institutions";
 $institutions_result = executeQuery($conn, $institutions_sql);
 $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_ASSOC) : [];
 
-
 // No connection close here, it will be closed at the end of the file
-
 ?>
 
 <!DOCTYPE html>
@@ -92,21 +114,20 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADDED VIEWPORT META TAG -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Institutions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Make sure this path is correct -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
     <div class="wrapper">
         <h2>Admin Dashboard</h2>
-        <nav class="main-nav"> <!-- ADDED class="main-nav" to the nav element -->
-            <button class="hamburger-menu">  <!-- Hamburger button -->
+        <nav class="main-nav">
+            <button class="hamburger-menu">
                 <span></span><span></span><span></span>
             </button>
             <ul>
@@ -134,27 +155,27 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
             </div>
             <div class="form-group">
                 <label>Address</label>
-                <input type="text" name="address" class="form-control <?php echo (!empty($institution_address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_address; ?>">
+                <input type="text" name="address" class="form-control <?php echo (!empty($institution_address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_address; ?>" required>
                 <span class="invalid-feedback"><?php echo $institution_address_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Contact Person</label>
-                <input type="text" name="contact_person" class="form-control <?php echo (!empty($institution_contact_person_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_contact_person; ?>">
+                <input type="text" name="contact_person" id="contact_person" class="form-control <?php echo (!empty($institution_contact_person_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_contact_person; ?>" required pattern="[A-Za-z\s]+">
                 <span class="invalid-feedback"><?php echo $institution_contact_person_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" name="phone" class="form-control <?php echo (!empty($institution_phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_phone; ?>">
+                <input type="tel" name="phone" class="form-control <?php echo (!empty($institution_phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_phone; ?>" required>
                 <span class="invalid-feedback"><?php echo $institution_phone_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control <?php echo (!empty($institution_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_email; ?>">
+                <input type="email" name="email" class="form-control <?php echo (!empty($institution_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $institution_email; ?>" required>
                 <span class="invalid-feedback"><?php echo $institution_email_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Type</label>
-                <select name="type" id="type" class="form-control <?php echo (!empty($institution_type_err)) ? 'is-invalid' : ''; ?>">
+                <select name="type" id="type" class="form-control <?php echo (!empty($institution_type_err)) ? 'is-invalid' : ''; ?>" required>
                     <option value="">Select type</option>
                     <option value="Institution" <?php if ($institution_type === 'Institution') echo 'selected'; ?>>Institution</option>
                     <option value="Vendor" <?php if ($institution_type === 'Vendor') echo 'selected'; ?>>Vendor</option>
@@ -205,20 +226,18 @@ $institutions = $institutions_result ? $institutions_result->fetch_all(MYSQLI_AS
             </table>
         </div>
 
-
         <hr>
-
 
         <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     </div>
 
-    <script> // ADDED JAVASCRIPT FOR HAMBURGER MENU
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const nav = document.querySelector('.main-nav'); // Use class 'main-nav'
+            const nav = document.querySelector('.main-nav');
 
             hamburgerMenu.addEventListener('click', function() {
-                nav.classList.toggle('nav-active'); // Toggle the 'nav-active' class on the nav element
+                nav.classList.toggle('nav-active');
             });
         });
     </script>

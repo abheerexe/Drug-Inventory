@@ -38,7 +38,7 @@ if (isset($_GET['date']) && isset($_GET['request_ids'])) {
     $request_ids_placeholders = implode(',', array_fill(0, count($request_ids), '?'));
 
     // Security: Double-check that ALL request IDs belong to the institution AND are "Approved"
-    $check_sql = "SELECT COUNT(*) FROM requests WHERE id IN ($request_ids_placeholders) AND institution_id = ? AND status = 'Approved'";
+    $check_sql = "SELECT COUNT(*) FROM requests WHERE id IN ($request_ids_placeholders) AND institution_id = ? AND status IN ('Approved', 'Delivered')";
 
     // Corrected $types and $params for check_sql
     $types = str_repeat('i', count($request_ids)) . 'i'; // Types for prepared statement - Corrected: Kept extra 'i' for institution_id
