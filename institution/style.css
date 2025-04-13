@@ -5,8 +5,50 @@ body {
     background-color: black;
     margin: 0;
     padding: 0;
+}/* style.css */
+
+/* ... (Your existing CSS styles) ... */
+
+.dashboard-content .row {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+    margin-bottom: 20px; /* Spacing below the summary cards row */
 }
 
+.dashboard-content .col-md-4 { /* Adjusted to col-md-4 for institution dashboard layout */
+    flex: 0 0 calc(33.33% - 20px); /* 3 cards per row on medium screens and up */
+    max-width: calc(33.33% - 20px);
+    margin-right: 20px;
+    margin-bottom: 20px; /* Spacing between cards */
+}
+
+.dashboard-content .col-md-4:last-child {
+    margin-right: 0; /* Remove margin from the last card in each row */
+}
+
+
+.dashboard-content .dashboard-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-content .dashboard-card h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.dashboard-content .dashboard-card p {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #007bff; /* Bootstrap primary color - you can change this */
+    margin: 0;
+}
+
+/* ... (Rest of your CSS styles) ... */
 /* Base wrapper styles with improved responsiveness */
 .wrapper {
     width: 95%;

@@ -1,4 +1,9 @@
 <?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+<?php
 session_start();
 require_once '../database.php';
 
@@ -24,8 +29,7 @@ $currentPage = basename($_SERVER['PHP_SELF']); // Gets the filename of the curre
     <link rel="stylesheet" href="supplier.css"> <!-- Use your supplier-specific stylesheet -->
     <!-- Removed Bootstrap CSS link - assuming your style.css handles all styling -->
     <style>
-        /* Inline styles are generally discouraged, move these to your CSS file if needed */
-        /* Consider removing this <style> block and managing all styles in CSS files */
+        /* Add any specific styling for supplier dashboard here */
     </style>
 </head>
 <body>
@@ -33,7 +37,12 @@ $currentPage = basename($_SERVER['PHP_SELF']); // Gets the filename of the curre
         <h2>Supplier Dashboard</h2>
         <p>Welcome, <strong><?php echo htmlspecialchars($username); ?></strong> (Supplier)!</p>
 
-        <nav>
+        <nav class="main-nav">  <!-- Added class "main-nav" for consistency -->
+            <button class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul>
                 <li><a href="dashboard.php" class="<?php if ($currentPage == 'dashboard.php') echo 'active'; ?>" style="text-decoration: underline;text-underline-offset:0.2em;">Dashboard</a></li>
                 <li><a href="requests.php" class="<?php if ($currentPage == 'requests.php') echo 'active'; ?>">Manage Requests</a></li>
@@ -53,13 +62,13 @@ $currentPage = basename($_SERVER['PHP_SELF']); // Gets the filename of the curre
 
         <hr>
 
-        <a href="../admin/logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+        <a href="../admin/logout.php" class="button-40 btn ml-3">Sign Out of Your Account</a>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerMenu = document.querySelector('.hamburger-menu'); // Ensure hamburger menu is still not needed, if yes then uncomment this and related script
-            const nav = document.querySelector('nav');
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const nav = document.querySelector('.main-nav'); // Use class 'main-nav'
 
             if (hamburgerMenu && nav) {
                 hamburgerMenu.addEventListener('click', () => {
